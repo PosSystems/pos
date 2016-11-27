@@ -6,12 +6,11 @@
 	<artifactId>system</artifactId>
 	<name>pos</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>0.0.1-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
-		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
+		<org.slf4j-version>1.7.21</org.slf4j-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -32,14 +31,11 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
-		</dependency>	
-		
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>				
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -83,13 +79,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-				
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -122,6 +111,7 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-core</artifactId>
             <version>1.2.5</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-java -->
@@ -129,6 +119,7 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>1.2.5</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-junit -->
@@ -136,6 +127,7 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>1.2.5</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-jvm-deps -->
@@ -143,6 +135,7 @@
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-jvm-deps</artifactId>
             <version>1.0.5</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
@@ -150,6 +143,7 @@
             <groupId>net.masterthought</groupId>
             <artifactId>cucumber-reporting</artifactId>
             <version>3.2.0</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/info.cukes/gherkin -->
@@ -157,6 +151,7 @@
             <groupId>info.cukes</groupId>
             <artifactId>gherkin</artifactId>
             <version>2.12.2</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
@@ -164,6 +159,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
+			<scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
@@ -171,6 +167,7 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.0.1</version>
+			<scope>test</scope>
         </dependency>
 		        
 	</dependencies>
@@ -195,8 +192,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
