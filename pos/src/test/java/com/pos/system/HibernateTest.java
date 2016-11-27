@@ -11,7 +11,7 @@ public class HibernateTest {
 
 	public static void main(String[] args) {
 
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("root-context.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
 		EmployeeDAO personDAO = context.getBean(EmployeeDAO.class);
 
