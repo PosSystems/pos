@@ -23,7 +23,7 @@
       password
    </property>
    <property name="hibernate.hbm2ddl.auto">
-      create
+      update
    </property>
 
    <!-- List of XML mapping files -->

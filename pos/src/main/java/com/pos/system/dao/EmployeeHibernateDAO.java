@@ -28,7 +28,7 @@ public class EmployeeHibernateDAO implements EmployeeDAO {
 	@Override
 	public List<Employee> list() {
 		Session session = this.sessionFactory.openSession();
-		List<Employee> personList = session.createQuery("from tblEmployee").getResultList();
+		List<Employee> personList = session.createQuery("from Employee").getResultList();
 		session.close();
 		return personList;
 	}
