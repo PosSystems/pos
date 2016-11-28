@@ -1,7 +1,7 @@
 package com.pos.system.model;
 
 public class Employee {
-	private int intID;
+	private int intId;
 	private String strGivenName;
 	private String strSurname;
 	private String strStreet;
@@ -10,12 +10,12 @@ public class Employee {
 	private String strPassword;
 	private boolean bitManagementArea;
 
-	public int getIntID() {
-		return intID;
+	public int getIntId() {
+		return intId;
 	}
 
-	public void setIntID(int intID) {
-		this.intID = intID;
+	public void setIntId(int intId) {
+		this.intId = intId;
 	}
 
 	public String getStrGivenName() {
