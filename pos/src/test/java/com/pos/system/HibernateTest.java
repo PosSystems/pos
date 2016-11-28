@@ -16,6 +16,7 @@ public class HibernateTest {
 		EmployeeDAO personDAO = context.getBean(EmployeeDAO.class);
 
 		Employee employee = new Employee();
+		employee.setIntId(13);
 		employee.setBitManagementArea(true);
 		employee.setStrSurname("Doe");
 		employee.setStrGivenName("John");
