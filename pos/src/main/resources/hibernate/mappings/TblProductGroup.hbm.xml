@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 30, 2016 5:14:15 PM by Hibernate Tools 5.2.0.Beta1 -->
+<hibernate-mapping>
+    <class name="TblProductGroup" table="tblProductGroup" catalog="test" optimistic-lock="version">
+        <id name="intId" type="int">
+            <column name="intId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tblVat" class="TblVat" fetch="select">
+            <column name="intVatId" not-null="true" />
+        </many-to-one>
+        <property name="stName" type="string">
+            <column name="stName" length="30" not-null="true" />
+        </property>
+        <property name="fltProfitMargin" type="float">
+            <column name="fltProfitMargin" precision="12" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

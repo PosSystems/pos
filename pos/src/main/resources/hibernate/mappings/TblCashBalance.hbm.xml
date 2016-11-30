@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 30, 2016 5:14:15 PM by Hibernate Tools 5.2.0.Beta1 -->
+<hibernate-mapping>
+    <class name="TblCashBalance" table="tblCashBalance" catalog="test" optimistic-lock="version">
+        <id name="intId" type="java.lang.Integer">
+            <column name="intId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tblEmployee" class="TblEmployee" fetch="select">
+            <column name="intEmployeeId" not-null="true" />
+        </many-to-one>
+        <property name="datDate" type="date">
+            <column name="datDate" length="10" not-null="true" />
+        </property>
+        <property name="fltAmount" type="float">
+            <column name="fltAmount" precision="12" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
