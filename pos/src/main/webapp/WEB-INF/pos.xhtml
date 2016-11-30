@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<link rel="stylesheet" href="pos.css"/>
+	</h:head>	
+	
+	<h:form id="cash">
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="129">
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel for="employeeInput" value="Verkäufer"/>
+							<p:selectOneMenu id="employeeInput" value="#{posBean.cashier}">
+								<f:selectItems value="#{posBean.employees}" var="emp" 
+								itemLabel="#{emp.name}" itemValue="#{emp}"/>
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width:3em">
+							<p:outputLabel for="quantityInput" value="Menge"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel for="productGroupInput" value="Produktgruppe"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:inputText id="quantityInput" value="#{posBean.selectedQuantity}" 
+							style="width:3em"/>
+						</p:column>
+						<p:column>
+							<p:inputText id="productGroupInput" value="#{posBean.selectedProductGroupId}"
+							style="width:100%"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="east" size="30%">
+				<p:dataGrid value="#{posBean.productGroups}" var="pg" columns="1">
+					<p:commandButton value="#{pg.name}" style="width:100%" immediate="true"
+					actionListener="#{posBean.setSelectedProductGroupObject(pg)}" 
+					oncomplete="PF('dlgPriceInput').show();"/>
+				</p:dataGrid>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="109">
+				<p:commandButton value="Zahlen" style="height:100%"/>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center" id="center">
+				<p:dataTable value="#{posBean.articles}" var="article">
+					<p:column headerText="Artikel">
+						<p:outputLabel value="#{article}"/>
+					</p:column>
+				</p:dataTable>
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+	
+	<p:dialog header="Preiseingabe" widgetVar="dlgPriceInput" modal="true" resizable="false"
+	size="100">
+		<h:form>
+    		<p:outputLabel for="priceInput" value="Bitte geben Sie den Preis ein"/>
+    		<p:inputText id="priceInput" value="#{posBean.selectedPrice}"/>
+    		<p:commandButton value="OK" actionListener="#{posBean.addArticle}" 
+    		update="cash" ajax="false" oncomplete="PF('dlgPriceInput').hide();"/>
+    	</h:form>
+	</p:dialog>
+</html>
