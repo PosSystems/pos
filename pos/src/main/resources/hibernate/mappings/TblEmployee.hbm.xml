@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 30, 2016 5:14:15 PM by Hibernate Tools 5.2.0.Beta1 -->
+<hibernate-mapping>
+    <class name="TblEmployee" table="tblEmployee" catalog="test" optimistic-lock="version">
+        <id name="intId" type="int">
+            <column name="intId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tblTitle" class="TblTitle" fetch="select">
+            <column name="intTitleId" />
+        </many-to-one>
+        <property name="strGivenName" type="string">
+            <column name="strGivenName" length="30" />
+        </property>
+        <property name="strSurname" type="string">
+            <column name="strSurname" length="30" not-null="true" />
+        </property>
+        <property name="strStreet" type="string">
+            <column name="strStreet" length="50" />
+        </property>
+        <property name="intPostcode" type="java.lang.Integer">
+            <column name="intPostcode" />
+        </property>
+        <property name="strCity" type="string">
+            <column name="strCity" length="30" />
+        </property>
+        <property name="strPassword" type="string">
+            <column name="strPassword" length="20" />
+        </property>
+        <property name="bitManagementArea" type="java.lang.Boolean">
+            <column name="bitManagementArea" />
+        </property>
+        <set name="tblCashBalances" table="tblCashBalance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="intEmployeeId" not-null="true" />
+            </key>
+            <one-to-many class="TblCashBalance" />
+        </set>
+        <set name="tblOpeningBalances" table="tblOpeningBalance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="intEmployeeId" not-null="true" />
+            </key>
+            <one-to-many class="TblOpeningBalance" />
+        </set>
+        <set name="tblReceiptHeads" table="tblReceiptHead" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="intEmployeeId" not-null="true" />
+            </key>
+            <one-to-many class="TblReceiptHead" />
+        </set>
+    </class>
+</hibernate-mapping>
