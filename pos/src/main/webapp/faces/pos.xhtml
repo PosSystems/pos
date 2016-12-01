@@ -51,26 +51,45 @@
 			</p:layoutUnit>
 			
 			<p:layoutUnit position="west" size="109">
-				<p:commandButton value="Zahlen" style="height:100%"/>
+				<p:commandButton value="Zahlen" style="height:100%"
+				oncomplete="PF('dlgPayment').show();"/>
 			</p:layoutUnit>
 			
 			<p:layoutUnit position="center" id="center">
-				<p:dataTable value="#{posBean.articles}" var="article">
+				<p:dataTable value="#{posBean.articles}" var="article" emptyMessage="">
+					<p:column headerText="Menge">
+						<p:outputLabel value="#{article.quantity}"/>
+					</p:column>
 					<p:column headerText="Artikel">
-						<p:outputLabel value="#{article}"/>
+						<p:outputLabel value="#{article.productGroup.name}"/>
+					</p:column>
+					<p:column headerText="Preis">
+						<p:outputLabel value="#{article.price}"/>
 					</p:column>
 				</p:dataTable>
 			</p:layoutUnit>
 		</p:layout>
 	</h:form>
 	
-	<p:dialog header="Preiseingabe" widgetVar="dlgPriceInput" modal="true" resizable="false"
-	size="100">
+	<p:dialog header="Preiseingabe" widgetVar="dlgPriceInput" modal="true" 
+	resizable="false">
 		<h:form>
     		<p:outputLabel for="priceInput" value="Bitte geben Sie den Preis ein"/>
     		<p:inputText id="priceInput" value="#{posBean.selectedPrice}"/>
     		<p:commandButton value="OK" actionListener="#{posBean.addArticle}" 
     		update="cash" ajax="false" oncomplete="PF('dlgPriceInput').hide();"/>
+    	</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Zahlung" widgetVar="dlgPayment" modal="true" resizable="false">
+		<h:form>
+    		<p:panelGrid columns="2">
+    			<p:outputLabel value="Zu zahlen"/>
+    			<p:outputLabel value="#{posBean.calculateLumpSumPrice()}"/>
+    			<p:outputLabel for="givenInput" value="Gegeben"/>
+    			<p:inputText id="givenInput"/>
+    		</p:panelGrid>
+    		<p:commandButton value="OK"/>
     	</h:form>
 	</p:dialog>
 </html>

@@ -16,7 +16,7 @@ public class PosBean {
 	private int _selectedQuantity;
 	private ProductGroup _selectedProductGroupObject;
 	private int _selectedProductGroupId;
-	private List<String> _articles;
+	private List<Article> _articles;
 	private double _selectedPrice;
 
 	@PostConstruct
@@ -24,6 +24,7 @@ public class PosBean {
 		_employees = new ArrayList<Employee>();
 		_productGroups = new ArrayList<ProductGroup>();
 
+		_employees.add(new Employee(0, ""));
 		_employees.add(new Employee(1, "Sven"));
 		_employees.add(new Employee(2, "Dominik"));
 		_employees.add(new Employee(3, "Sandra"));
@@ -36,14 +37,23 @@ public class PosBean {
 
 		_selectedQuantity = 1;
 
-		_articles = new ArrayList<String>();
-		_articles.add("Test");
+		_articles = new ArrayList<Article>();
 	}
 
 	public void addArticle() {
-		_articles.add(_selectedProductGroupObject.getName() + " " + _selectedPrice);
+		_articles.add(new Article(_selectedQuantity, _selectedProductGroupObject, _selectedPrice));
 		_selectedQuantity = 1;
 		_selectedPrice = 0;
+	}
+
+	public double calculateLumpSumPrice() {
+		int tmp = 0;
+
+		for (Article a : _articles) {
+			tmp += a.getQuantity() * a.getPrice();
+		}
+
+		return tmp;
 	}
 
 	public List<Employee> getEmployees() {
@@ -86,11 +96,11 @@ public class PosBean {
 		this._selectedProductGroupObject = _selectedProductGroupObject;
 	}
 
-	public List<String> getArticles() {
+	public List<Article> getArticles() {
 		return _articles;
 	}
 
-	public void setArticles(List<String> _articles) {
+	public void setArticles(List<Article> _articles) {
 		this._articles = _articles;
 	}
 
