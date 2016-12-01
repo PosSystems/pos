@@ -31,6 +31,7 @@ public class TestSteps {
 			driver.quit();
 			return;
 		}
+		driver.quit();
 		throw new Throwable();
 	}
 
