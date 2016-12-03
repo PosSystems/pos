@@ -52,7 +52,8 @@
 			
 			<p:layoutUnit position="west" size="109">
 				<p:commandButton value="Zahlen" style="height:100%"
-				oncomplete="PF('dlgPayment').show();"/>
+				actionListener="#{posBean.calculateLumpSumPrice()}" update="frmDlgPayment"
+				oncomplete="PF('dlgPayment').show();" immediate="true"/>
 			</p:layoutUnit>
 			
 			<p:layoutUnit position="center" id="center">
@@ -82,14 +83,27 @@
 	</p:dialog>
 	
 	<p:dialog header="Zahlung" widgetVar="dlgPayment" modal="true" resizable="false">
-		<h:form>
+		<h:form id="frmDlgPayment">
     		<p:panelGrid columns="2">
     			<p:outputLabel value="Zu zahlen"/>
-    			<p:outputLabel value="#{posBean.calculateLumpSumPrice()}"/>
+    			<p:outputLabel value="#{posBean.lumpSumPrice}"/>
     			<p:outputLabel for="givenInput" value="Gegeben"/>
-    			<p:inputText id="givenInput"/>
+    			<p:inputText id="givenInput" value="#{posBean.given}"/>
     		</p:panelGrid>
-    		<p:commandButton value="OK"/>
+    		<p:commandButton actionListener="#{posBean.calculateDrawback()}"
+    		oncomplete="PF('dlgPayment').hide(); PF('dlgDrawback').show();"
+    		value="OK" update="frmDlgDrawback"/>
     	</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Rückgeld" widgetVar="dlgDrawback" modal="true" resizable="false">
+		<h:form id="frmDlgDrawback">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Rückgeld"/>
+				<p:outputLabel value="#{posBean.drawback}"/>
+			</p:panelGrid>
+			<p:commandButton oncomplete="PF('dlgDrawback').hide();"
+			update="cash" ajax="false" value="OK" actionListener="#{posBean.reset()}"/>
+		</h:form>
 	</p:dialog>
 </html>

@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PosBean {
 	private List<Employee> _employees;
 	private List<ProductGroup> _productGroups;
@@ -18,6 +18,9 @@ public class PosBean {
 	private int _selectedProductGroupId;
 	private List<Article> _articles;
 	private double _selectedPrice;
+	private double _drawback;
+	private double _lumpSumPrice;
+	private double _given;
 
 	@PostConstruct
 	public void init() {
@@ -46,14 +49,22 @@ public class PosBean {
 		_selectedPrice = 0;
 	}
 
-	public double calculateLumpSumPrice() {
-		int tmp = 0;
+	public void calculateLumpSumPrice() {
+		_lumpSumPrice = 0;
 
 		for (Article a : _articles) {
-			tmp += a.getQuantity() * a.getPrice();
+			_lumpSumPrice += a.getQuantity() * a.getPrice();
 		}
+	}
 
-		return tmp;
+	public void calculateDrawback() {
+		_drawback = _given - _lumpSumPrice;
+	}
+
+	public void reset() {
+		_given = 0;
+		_drawback = 0;
+		_articles.clear();
 	}
 
 	public List<Employee> getEmployees() {
@@ -118,6 +129,30 @@ public class PosBean {
 
 	public void setSelectedProductGroupId(int _selectedProductGroupId) {
 		this._selectedProductGroupId = _selectedProductGroupId;
+	}
+
+	public double getDrawback() {
+		return _drawback;
+	}
+
+	public void setDrawback(double _drawback) {
+		this._drawback = _drawback;
+	}
+
+	public double getLumpSumPrice() {
+		return _lumpSumPrice;
+	}
+
+	public void setLumpSumPrice(double _lumpSumPrice) {
+		this._lumpSumPrice = _lumpSumPrice;
+	}
+
+	public double getGiven() {
+		return _given;
+	}
+
+	public void setGiven(double _given) {
+		this._given = _given;
 	}
 }
 
