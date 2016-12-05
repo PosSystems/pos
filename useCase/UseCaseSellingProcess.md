@@ -45,4 +45,4 @@ No postconditions.
 
 <!-- Link definitions -->
 [feature]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
-[flow]: https://github.com/PosSystems/pos/tree/master/useCase/flowChart/useCaseSellingProcess.png
+[flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseSellingProcess.png
