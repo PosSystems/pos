@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PosBean {
 	private List<Employee> _employees;
 	private List<ProductGroup> _productGroups;
@@ -16,14 +16,18 @@ public class PosBean {
 	private int _selectedQuantity;
 	private ProductGroup _selectedProductGroupObject;
 	private int _selectedProductGroupId;
-	private List<String> _articles;
+	private List<Article> _articles;
 	private double _selectedPrice;
+	private double _drawback;
+	private double _lumpSumPrice;
+	private double _given;
 
 	@PostConstruct
 	public void init() {
 		_employees = new ArrayList<Employee>();
 		_productGroups = new ArrayList<ProductGroup>();
 
+		_employees.add(new Employee(0, ""));
 		_employees.add(new Employee(1, "Sven"));
 		_employees.add(new Employee(2, "Dominik"));
 		_employees.add(new Employee(3, "Sandra"));
@@ -36,14 +40,31 @@ public class PosBean {
 
 		_selectedQuantity = 1;
 
-		_articles = new ArrayList<String>();
-		_articles.add("Test");
+		_articles = new ArrayList<Article>();
 	}
 
 	public void addArticle() {
-		_articles.add(_selectedProductGroupObject.getName() + " " + _selectedPrice);
+		_articles.add(new Article(_selectedQuantity, _selectedProductGroupObject, _selectedPrice));
 		_selectedQuantity = 1;
 		_selectedPrice = 0;
+	}
+
+	public void calculateLumpSumPrice() {
+		_lumpSumPrice = 0;
+
+		for (Article a : _articles) {
+			_lumpSumPrice += a.getQuantity() * a.getPrice();
+		}
+	}
+
+	public void calculateDrawback() {
+		_drawback = _given - _lumpSumPrice;
+	}
+
+	public void reset() {
+		_given = 0;
+		_drawback = 0;
+		_articles.clear();
 	}
 
 	public List<Employee> getEmployees() {
@@ -86,11 +107,11 @@ public class PosBean {
 		this._selectedProductGroupObject = _selectedProductGroupObject;
 	}
 
-	public List<String> getArticles() {
+	public List<Article> getArticles() {
 		return _articles;
 	}
 
-	public void setArticles(List<String> _articles) {
+	public void setArticles(List<Article> _articles) {
 		this._articles = _articles;
 	}
 
@@ -108,6 +129,30 @@ public class PosBean {
 
 	public void setSelectedProductGroupId(int _selectedProductGroupId) {
 		this._selectedProductGroupId = _selectedProductGroupId;
+	}
+
+	public double getDrawback() {
+		return _drawback;
+	}
+
+	public void setDrawback(double _drawback) {
+		this._drawback = _drawback;
+	}
+
+	public double getLumpSumPrice() {
+		return _lumpSumPrice;
+	}
+
+	public void setLumpSumPrice(double _lumpSumPrice) {
+		this._lumpSumPrice = _lumpSumPrice;
+	}
+
+	public double getGiven() {
+		return _given;
+	}
+
+	public void setGiven(double _given) {
+		this._given = _given;
 	}
 }
 
