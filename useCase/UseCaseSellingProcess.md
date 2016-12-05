@@ -20,7 +20,7 @@ Activity Diagram:
 
 Feature-File:
 
-[Link to the Feature-File](tbd)
+[Link to the Feature-File][feature]
 
 #### 2.2 Alternative Flows
 
@@ -29,8 +29,7 @@ Feature-File:
 ### 3.Special Requirements
 
 #### 3.1 Performance
-
-According to our [SRS][SRS] ...
+...
 
 
 ### 4. Preconditions
@@ -45,5 +44,5 @@ No postconditions.
 (n/a)
 
 <!-- Link definitions -->
-[SRS]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
-[flow]: https://github.com/tinf15b4-kino/kino-web/blob/develop/documents/UC/get%20information/flow_GetInformation.png
+[feature]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
+[flow]: https://github.com/PosSystems/pos/tree/master/useCase/flowChart/useCaseSellingProcess
