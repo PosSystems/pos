@@ -29,7 +29,7 @@ Feature-File:
 ### 3.Special Requirements
 
 #### 3.1 Performance
-...
+See [SRS]
 
 
 ### 4. Preconditions
@@ -46,3 +46,4 @@ No postconditions.
 <!-- Link definitions -->
 [feature]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseSellingProcess.png
+[SRS]: https://github.com/PosSystems/pos/blob/master/Software%20Requirements%20Specification.pdf
