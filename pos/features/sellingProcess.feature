@@ -9,6 +9,6 @@ Scenario: enter price for product group
 Scenario: Payment
     Given cashier has entered price for product group
     When cashier clicks on payment button
-    And cashier enters 10.0 in the payment dialog
+    And cashier enters payment given in the payment dialog
     Then a dialog containing the difference in payment appears
     And the article is removed from the list

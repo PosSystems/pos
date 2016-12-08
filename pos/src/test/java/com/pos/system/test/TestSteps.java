@@ -203,7 +203,6 @@ public class TestSteps {
 		cashier_is_on_the_cash_area_site();
 		cashier_clicks_on_a_product_group_button();
 		cashier_enters_in_the_opened_dialog(10, 0);
-		the_article_is_shown_in_the_lis_with_the_price_of(10, 0);
 	}
 
 	@When("^cashier clicks on payment button$")
@@ -220,9 +219,15 @@ public class TestSteps {
 	public void cashier_enters_in_the_payment_dialog(int arg1, int arg2) throws Throwable {
 		driver.findElement(By.id("frmDlgPayment:givenInput")).clear();
 		driver.findElement(By.id("frmDlgPayment:givenInput")).sendKeys("10.0");
-		driver.findElement(By.id("frmDlgPayment:j_idt40")).click();
+		// driver.findElement(By.id("frmDlgPayment:j_idt40")).click();
 	}
 
+	@When("^cashier enters payment given in the payment dialog$")
+	public void cashier_enters_payment_given_in_the_payment_dialog() throws Throwable {
+		driver.findElement(By.id("frmDlgPayment:givenInput")).clear();
+		driver.findElement(By.id("frmDlgPayment:givenInput")).sendKeys("10.0");
+		driver.findElement(By.id("frmDlgPayment:j_idt40")).click();
+	}
 	@Then("^the article is removed from the list$")
 	public void the_article_is_removed_from_the_list() throws Throwable {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
