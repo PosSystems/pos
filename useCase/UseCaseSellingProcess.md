@@ -54,7 +54,7 @@ No postconditions.
 [feature]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseSellingProcess.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/Software%20Requirements%20Specification.pdf
-[mockup1]:https://github.com/PosSystems/pos/blob/master/graphics/1.png
-[mockup2]:https://github.com/PosSystems/pos/blob/master/graphics/2.png
-[mockup3]:https://github.com/PosSystems/pos/blob/master/graphics/3.png
-[mockup4]:https://github.com/PosSystems/pos/blob/master/graphics/4.png
+[mockup1]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess1.png
+[mockup2]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess2.png
+[mockup3]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess3.png
+[mockup4]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess4.png
