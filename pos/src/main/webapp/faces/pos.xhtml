@@ -5,12 +5,20 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<link rel="stylesheet" href="pos.css"/>
+		<link rel="stylesheet" href="../pos.css"/>
 	</h:head>	
 	
 	<h:form id="cash">
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" size="129">
+		<p:layout fullPage="true">		
+			<!--p:layoutUnit position="north" size="129"-->
+			<p:layoutUnit position="north" size="105">
+				<p:menubar>
+			        <p:submenu label="Kasse">
+			            <p:menuitem value="Kassensturz" onclick="PF('dlgCashCheck').show();"
+			            immediate="true" update="frmDlgCashCheck"/>
+			        </p:submenu>
+			    </p:menubar>
+			    
 				<p:panelGrid style="width:100%">
 					<p:row>
 						<p:column colspan="2">
@@ -21,7 +29,7 @@
 							</p:selectOneMenu>
 						</p:column>
 					</p:row>
-					<p:row>
+					<!--p:row>
 						<p:column style="width:3em">
 							<p:outputLabel for="quantityInput" value="Menge"/>
 						</p:column>
@@ -38,22 +46,22 @@
 							<p:inputText id="productGroupInput" value="#{posBean.selectedProductGroupId}"
 							style="width:100%"/>
 						</p:column>
-					</p:row>
+					</p:row-->
 				</p:panelGrid>
 			</p:layoutUnit>
 			
-			<p:layoutUnit position="east" size="30%">
+			<p:layoutUnit position="east" size="109">
+				<p:commandButton value="Zahlen" style="height:100%"
+				actionListener="#{posBean.calculateLumpSumPrice()}" update="frmDlgPayment"
+				oncomplete="PF('dlgPayment').show();" immediate="true"/>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="30%">
 				<p:dataGrid value="#{posBean.productGroups}" var="pg" columns="1">
 					<p:commandButton value="#{pg.name}" style="width:100%" immediate="true"
 					actionListener="#{posBean.setSelectedProductGroupObject(pg)}" 
 					oncomplete="PF('dlgPriceInput').show();"/>
 				</p:dataGrid>
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="west" size="109">
-				<p:commandButton value="Zahlen" style="height:100%"
-				actionListener="#{posBean.calculateLumpSumPrice()}" update="frmDlgPayment"
-				oncomplete="PF('dlgPayment').show();" immediate="true"/>
 			</p:layoutUnit>
 			
 			<p:layoutUnit position="center" id="center">
@@ -104,6 +112,22 @@
 			</p:panelGrid>
 			<p:commandButton oncomplete="PF('dlgDrawback').hide();"
 			update="cash" ajax="false" value="OK" actionListener="#{posBean.reset()}"/>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Kassensturz" widgetVar="dlgCashCheck" modal="true" resizable="false">
+		<h:form id="frmDlgCashCheck">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="In der Kasse"/>
+				<p:outputLabel value="#{posBean.dayTotal}"/>
+				<p:outputLabel value="Gezählt"/>
+				<p:inputText value="#{posBean.cashCheckCount}"/>
+				<p:outputLabel value="Differenz"/>
+				<p:outputLabel value="#{posBean.cashCheckDifference}"/>
+			</p:panelGrid>
+			<p:commandButton value="OK" actionListener="#{posBean.calculateCashCheckDifference}"
+			update="frmDlgCashCheck"/>
+			<p:commandButton value="Abbrechen" oncomplete="PF('dlgCashCheck').hide();"/>
 		</h:form>
 	</p:dialog>
 </html>

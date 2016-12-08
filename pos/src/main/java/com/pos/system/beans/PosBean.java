@@ -21,6 +21,9 @@ public class PosBean {
 	private double _drawback;
 	private double _lumpSumPrice;
 	private double _given;
+	private double _dayTotal;
+	private double _cashCheckDifference;
+	private double _cashCheckCount;
 
 	@PostConstruct
 	public void init() {
@@ -39,8 +42,8 @@ public class PosBean {
 		_productGroups.add(new ProductGroup(6, "SLR-Kameras"));
 
 		_selectedQuantity = 1;
-
 		_articles = new ArrayList<Article>();
+		_dayTotal = 0;
 	}
 
 	public void addArticle() {
@@ -58,13 +61,18 @@ public class PosBean {
 	}
 
 	public void calculateDrawback() {
-		_drawback = _given - _lumpSumPrice;
+		_drawback = Math.round(100 * (_given - _lumpSumPrice)) / 100.0;
 	}
 
 	public void reset() {
+		_dayTotal += _lumpSumPrice;
 		_given = 0;
 		_drawback = 0;
 		_articles.clear();
+	}
+
+	public void calculateCashCheckDifference() {
+		_cashCheckDifference = Math.round(100 * (_cashCheckCount - _dayTotal)) / 100.0;
 	}
 
 	public List<Employee> getEmployees() {
@@ -153,6 +161,30 @@ public class PosBean {
 
 	public void setGiven(double _given) {
 		this._given = _given;
+	}
+
+	public double getDayTotal() {
+		return _dayTotal;
+	}
+
+	public void setDayTotal(double _dayTotal) {
+		this._dayTotal = _dayTotal;
+	}
+
+	public double getCashCheckDifference() {
+		return _cashCheckDifference;
+	}
+
+	public void setCashCheckDifference(double _cashCheckDifference) {
+		this._cashCheckDifference = _cashCheckDifference;
+	}
+
+	public double getCashCheckCount() {
+		return _cashCheckCount;
+	}
+
+	public void setCashCheckCount(double _cashCheckCount) {
+		this._cashCheckCount = _cashCheckCount;
 	}
 }
 
