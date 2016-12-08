@@ -178,20 +178,20 @@ public class TestSteps {
 
 	@When("^cashier clicks on a product group button$")
 	public void cashier_clicks_on_a_product_group_button() throws Throwable {
-		driver.findElement(By.id("cash:j_idt20:2:j_idt21")).click();
+		driver.findElement(By.id("cash:j_idt19:2:j_idt20")).click();
 	}
 
 	@When("^cashier enters (\\d+)\\.(\\d+) in the opened dialog$")
 	public void cashier_enters_in_the_opened_dialog(int arg1, int arg2) throws Throwable {
-		driver.findElement(By.id("j_idt32:priceInput")).clear();
-		driver.findElement(By.id("j_idt32:priceInput")).sendKeys("10.0");
-		driver.findElement(By.id("j_idt32:j_idt34")).click();
+		driver.findElement(By.id("j_idt29:priceInput")).clear();
+		driver.findElement(By.id("j_idt29:priceInput")).sendKeys("10.0");
+		driver.findElement(By.id("j_idt29:j_idt31")).click();
 	}
 
 	@Then("^the article is shown in the list with the price of (\\d+)\\.(\\d+)$")
 	public void the_article_is_shown_in_the_lis_with_the_price_of(int arg1, int arg2) throws Throwable {
-		if ("Speicherkarten".equals(driver.findElement(By.id("cash:j_idt24:0:j_idt28")).getText())) {
-			if ("10.0".equals(driver.findElement(By.id("cash:j_idt24:0:j_idt30")).getText())) {
+		if ("Speicherkarten".equals(driver.findElement(By.id("cash:j_idt21:0:j_idt25")).getText())) {
+			if ("10.0".equals(driver.findElement(By.id("cash:j_idt21:0:j_idt27")).getText())) {
 				return;
 			}
 		}
@@ -207,31 +207,25 @@ public class TestSteps {
 
 	@When("^cashier clicks on payment button$")
 	public void cashier_clicks_on_payment_button() throws Throwable {
-		driver.findElement(By.id("cash:j_idt23")).click();
+		driver.findElement(By.id("cash:j_idt17")).click();
 	}
 
 	@Then("^a dialog containing the difference in payment appears$")
 	public void a_dialog_containing_the_difference_in_payment_appears() throws Throwable {
-		driver.findElement(By.id("frmDlgDrawback:j_idt45")).click();
-	}
-
-	@When("^cashier enters (\\d+)\\.(\\d+) in the payment dialog$")
-	public void cashier_enters_in_the_payment_dialog(int arg1, int arg2) throws Throwable {
-		driver.findElement(By.id("frmDlgPayment:givenInput")).clear();
-		driver.findElement(By.id("frmDlgPayment:givenInput")).sendKeys("10.0");
-		// driver.findElement(By.id("frmDlgPayment:j_idt40")).click();
+		driver.findElement(By.id("frmDlgDrawback:j_idt42")).click();
 	}
 
 	@When("^cashier enters payment given in the payment dialog$")
 	public void cashier_enters_payment_given_in_the_payment_dialog() throws Throwable {
 		driver.findElement(By.id("frmDlgPayment:givenInput")).clear();
 		driver.findElement(By.id("frmDlgPayment:givenInput")).sendKeys("10.0");
-		driver.findElement(By.id("frmDlgPayment:j_idt40")).click();
+		driver.findElement(By.id("frmDlgPayment:j_idt37")).click();
 	}
+
 	@Then("^the article is removed from the list$")
 	public void the_article_is_removed_from_the_list() throws Throwable {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		boolean isEmpty = driver.findElements(By.id("cash:j_idt24:0:j_idt28")).isEmpty();
+		boolean isEmpty = driver.findElements(By.id("cash:j_idt21:0:j_idt21")).isEmpty();
 		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 		if (isEmpty) {
 			return;
