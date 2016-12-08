@@ -24,10 +24,10 @@ Feature-File:
 
 Mock-Ups:
 
-[Link to Mock-Ups][mockup1]
-[Mock-Up2][mockup2]
-[Mock-Up3][mockup3]
-[Mock-Up4][mockup4]
+![Link to Mock-Ups][mockup1]
+![Mock-Up2][mockup2]
+![Mock-Up3][mockup3]
+![Mock-Up4][mockup4]
 
 #### 2.2 Alternative Flows
 
