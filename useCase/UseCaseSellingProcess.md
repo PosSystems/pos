@@ -22,6 +22,13 @@ Feature-File:
 
 [Link to the Feature-File][feature]
 
+Mock-Ups:
+
+[Link to Mock-Ups][mockup1]
+[Mock-Up2][mockup2]
+[Mock-Up3][mockup3]
+[Mock-Up4][mockup4]
+
 #### 2.2 Alternative Flows
 
 (n/a)
@@ -47,3 +54,7 @@ No postconditions.
 [feature]: https://github.com/tinf15b4-kino/kino-web/blob/master/documents/SRS.md
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseSellingProcess.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/Software%20Requirements%20Specification.pdf
+[mockup1]:https://github.com/PosSystems/pos/blob/master/graphics/1.png
+[mockup2]:https://github.com/PosSystems/pos/blob/master/graphics/2.png
+[mockup3]:https://github.com/PosSystems/pos/blob/master/graphics/3.png
+[mockup4]:https://github.com/PosSystems/pos/blob/master/graphics/4.png
