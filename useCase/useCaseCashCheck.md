@@ -16,6 +16,11 @@ Activity Diagram:
 
 ![flow for selling process][flow]
 
+Mock-Ups:
+
+![Mock-Up 1][mockup1]
+![Mock-Up 2][mockup2]
+
 Feature-File:
 
 [Link to the Feature-File][feature]
@@ -42,6 +47,8 @@ No postconditions.
 (n/a)
 
 <!-- Link definitions -->
-[feature]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashCheck.png
+[feature]: https://github.com/PosSystems/pos/blob/featurefiles/pos/features/cashCheck.feature
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashCheck.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/Software%20Requirements%20Specification.pdf
+[mockup1]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/useCaseCashCheck1.png
+[mockup2]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/useCaseCashCheck2.png
