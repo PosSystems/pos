@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
@@ -232,4 +233,43 @@ public class TestSteps {
 		}
 		throw new Throwable();
 	}
+
+	@When("^cashier clicks the Cash Check button$")
+	public void cashier_clicks_the_Cash_Check_button() throws Throwable {
+		Actions actions = new Actions(driver);
+		actions.moveToElement(driver.findElement(By.linkText("Kasse")));
+		actions.perform();
+		actions.moveToElement(driver.findElement(By.linkText("Kassensturz")));
+		actions.click();
+		actions.perform();
+	}
+
+	@When("^cashier enters a value of (\\d+) in the counted textfield$")
+	public void cashier_enters_a_value_of_in_the_counted_textfield(int arg1) throws Throwable {
+		driver.findElement(By.id("frmDlgCashCheck:j_idt48")).clear();
+		driver.findElement(By.id("frmDlgCashCheck:j_idt48")).sendKeys(Integer.toString(arg1));
+	}
+
+	@When("^cashier clicks th OK button$")
+	public void cashier_clicks_th_OK_button() throws Throwable {
+		driver.findElement(By.id("frmDlgCashCheck:j_idt51")).click();
+	}
+
+	@Then("^show the difference of cash counted and cash in the box$")
+	public void show_the_difference_of_cash_counted_and_cash_in_the_box() throws Throwable {
+		if ("10.0".equals(driver.findElement(By.id("frmDlgCashCheck:j_idt50")).getText())) {
+			return;
+		}
+		throw new Throwable();
+	}
+
+	@When("^cashier clicks the abort button$")
+	public void cashier_clicks_the_abort_button() throws Throwable {
+		driver.findElement(By.id("frmDlgCashCheck:j_idt52")).click();
+	}
+
+	@Then("^show Cash Area$")
+	public void show_Cash_Area() throws Throwable {
+	}
+
 }
