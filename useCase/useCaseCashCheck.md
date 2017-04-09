@@ -10,7 +10,7 @@ Count the amount and check it against the system at any time possible.
 
 ### 2.Flow of Events
 
-####2.1 Basic Flow
+#### 2.1 Basic Flow
 
 Activity Diagram: 
 
