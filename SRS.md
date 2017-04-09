@@ -36,6 +36,8 @@ In this section definitions and explanations of acronyms and abbreviations are l
 The following chapters are about our vision and the software requirements.
 
 ## 2. Overall Description
+Vision:
+
 Our ambition is to create an application, which fulfills all legal requirements and still is user-friendly. 
 It should deliver all functions needed in a small retail. Therefore the user needs the possibility to create and 
 manage product groups and employee numbers, which are used as identifier in the system. 
