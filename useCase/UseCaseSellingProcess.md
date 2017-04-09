@@ -12,7 +12,7 @@ When every article is in the list the cashier can finish the process and change 
 
 ### 2.Flow of Events
 
-####2.1 Basic Flow
+#### 2.1 Basic Flow
 
 Activity Diagram: 
 
