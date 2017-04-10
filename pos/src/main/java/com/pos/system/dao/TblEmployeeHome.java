@@ -5,17 +5,18 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblEmployee;
 
 /**
  * Home object for domain model class TblEmployee.
+ * 
  * @see com.pos.system.dao.TblEmployee
  * @author Hibernate Tools
  */
@@ -26,17 +27,24 @@ public class TblEmployeeHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		// try {
+		// return (SessionFactory) new
+		// InitialContext().lookup("SessionFactory");
+		// } catch (Exception e) {
+		// log.error("Could not locate SessionFactory in JNDI", e);
+		// throw new IllegalStateException("Could not locate SessionFactory in
+		// JNDI");
+		// }
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblEmployee transientInstance) {
 		log.debug("persisting TblEmployee instance");
 		try {
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
