@@ -47,4 +47,4 @@ n/a
 <!-- Link definitions -->
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashOpeningEntry.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/SRS.md
-[mockup1]: 
+[mockup1]: https://github.com/PosSystems/pos/blob/master/useCase/mockUp/UseCaseCashOpeningEntry.png
