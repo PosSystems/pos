@@ -47,7 +47,7 @@ No postconditions.
 (n/a)
 
 <!-- Link definitions -->
-[feature]: https://github.com/PosSystems/pos/blob/featurefiles/pos/features/cashCheck.feature
+[feature]: https://github.com/PosSystems/pos/blob/master/pos/features/cashCheck.feature
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashCheck.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/SRS.md
 [mockup1]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/useCaseCashCheck1.png
