@@ -20,7 +20,7 @@ Activity Diagram:
 
 Feature-File:
 
-![Feature File][feature]
+[Link to the Feature File][feature]
 
 Mock-Ups:
 
