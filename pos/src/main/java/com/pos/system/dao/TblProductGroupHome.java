@@ -5,12 +5,12 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblProductGroup;
 
@@ -27,18 +27,19 @@ public class TblProductGroupHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblProductGroup transientInstance) {
 		log.debug("persisting TblProductGroup instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.persist(transientInstance);
+			session.flush();
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -49,7 +50,11 @@ public class TblProductGroupHome {
 	public void attachDirty(TblProductGroup instance) {
 		log.debug("attaching dirty TblProductGroup instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(instance);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -60,7 +65,11 @@ public class TblProductGroupHome {
 	public void attachClean(TblProductGroup instance) {
 		log.debug("attaching clean TblProductGroup instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.lock(instance, LockMode.NONE);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -71,7 +80,11 @@ public class TblProductGroupHome {
 	public void delete(TblProductGroup persistentInstance) {
 		log.debug("deleting TblProductGroup instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.delete(persistentInstance);
+			session.flush();
+			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -82,7 +95,11 @@ public class TblProductGroupHome {
 	public TblProductGroup merge(TblProductGroup detachedInstance) {
 		log.debug("merging TblProductGroup instance");
 		try {
-			TblProductGroup result = (TblProductGroup) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblProductGroup result = (TblProductGroup) session.merge(detachedInstance);
+			session.flush();
+			session.close();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -94,8 +111,10 @@ public class TblProductGroupHome {
 	public TblProductGroup findById(int id) {
 		log.debug("getting TblProductGroup instance with id: " + id);
 		try {
-			TblProductGroup instance = (TblProductGroup) sessionFactory.getCurrentSession()
-					.get("com.pos.system.model.TblProductGroup", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblProductGroup instance = (TblProductGroup) session.get("com.pos.system.model.TblProductGroup", id);
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -111,8 +130,11 @@ public class TblProductGroupHome {
 	public List<TblProductGroup> findByExample(TblProductGroup instance) {
 		log.debug("finding TblProductGroup instance by example");
 		try {
-			List<TblProductGroup> results = (List<TblProductGroup>) sessionFactory.getCurrentSession()
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<TblProductGroup> results = (List<TblProductGroup>) session
 					.createCriteria("com.pos.system.model.TblProductGroup").add(create(instance)).list();
+			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

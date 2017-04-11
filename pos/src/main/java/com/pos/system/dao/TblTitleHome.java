@@ -5,12 +5,12 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblTitle;
 
@@ -27,18 +27,19 @@ public class TblTitleHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblTitle transientInstance) {
 		log.debug("persisting TblTitle instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.persist(transientInstance);
+			session.flush();
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -49,7 +50,11 @@ public class TblTitleHome {
 	public void attachDirty(TblTitle instance) {
 		log.debug("attaching dirty TblTitle instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(instance);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -60,7 +65,11 @@ public class TblTitleHome {
 	public void attachClean(TblTitle instance) {
 		log.debug("attaching clean TblTitle instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.lock(instance, LockMode.NONE);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -71,7 +80,11 @@ public class TblTitleHome {
 	public void delete(TblTitle persistentInstance) {
 		log.debug("deleting TblTitle instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.delete(persistentInstance);
+			session.flush();
+			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -82,7 +95,11 @@ public class TblTitleHome {
 	public TblTitle merge(TblTitle detachedInstance) {
 		log.debug("merging TblTitle instance");
 		try {
-			TblTitle result = (TblTitle) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblTitle result = (TblTitle) session.merge(detachedInstance);
+			session.flush();
+			session.close();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -94,7 +111,11 @@ public class TblTitleHome {
 	public TblTitle findById(java.lang.Integer id) {
 		log.debug("getting TblTitle instance with id: " + id);
 		try {
-			TblTitle instance = (TblTitle) sessionFactory.getCurrentSession().get("com.pos.system.model.TblTitle", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblTitle instance = (TblTitle) session.get("com.pos.system.model.TblTitle", id);
+			session.flush();
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -110,8 +131,12 @@ public class TblTitleHome {
 	public List<TblTitle> findByExample(TblTitle instance) {
 		log.debug("finding TblTitle instance by example");
 		try {
-			List<TblTitle> results = (List<TblTitle>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.model.TblTitle").add(create(instance)).list();
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<TblTitle> results = (List<TblTitle>) session.createCriteria("com.pos.system.model.TblTitle")
+					.add(create(instance)).list();
+			session.flush();
+			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
