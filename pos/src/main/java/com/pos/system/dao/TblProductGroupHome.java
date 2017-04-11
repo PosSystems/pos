@@ -12,8 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
-import com.pos.system.model.TblProductGroup;
-
 /**
  * Home object for domain model class TblProductGroup.
  * @see com.pos.system.dao.TblProductGroup

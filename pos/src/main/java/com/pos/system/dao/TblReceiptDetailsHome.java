@@ -12,8 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
-import com.pos.system.model.TblReceiptDetails;
-
 /**
  * Home object for domain model class TblReceiptDetails.
  * @see com.pos.system.dao.TblReceiptDetails

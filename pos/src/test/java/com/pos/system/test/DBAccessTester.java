@@ -1,7 +1,7 @@
 package com.pos.system.test;
 
+import com.pos.system.dao.TblEmployee;
 import com.pos.system.dao.TblEmployeeHome;
-import com.pos.system.model.TblEmployee;
 
 public class DBAccessTester {
 
@@ -15,7 +15,12 @@ public class DBAccessTester {
 		testEmployee.setIntId(42);
 
 		employeeDao.persist(testEmployee);
-		employeeDao.findById(42);
+		TblEmployee geTblEmployee = employeeDao.findById(42);
+		if (geTblEmployee != null) {
+			System.out.println(geTblEmployee.getStrSurname());
+		} else {
+			System.out.println("du bist doof");
+		}
 	}
 
 }

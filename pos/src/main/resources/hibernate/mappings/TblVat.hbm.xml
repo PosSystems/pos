@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 30, 2016 5:14:15 PM by Hibernate Tools 5.2.0.Beta1 -->
 <hibernate-mapping>
-    <class name="com.pos.system.model.TblVat" table="tblVat" catalog="test" optimistic-lock="version">
+    <class name="com.pos.system.dao.TblVat" table="tblVat" catalog="test" optimistic-lock="version">
         <id name="intId" type="java.lang.Integer">
             <column name="intId" />
             <generator class="identity" />
@@ -15,7 +15,7 @@
             <key>
                 <column name="intVatId" not-null="true" />
             </key>
-            <one-to-many class="com.pos.system.model.TblProductGroup" />
+            <one-to-many class="com.pos.system.dao.TblProductGroup" />
         </set>
     </class>
 </hibernate-mapping>
