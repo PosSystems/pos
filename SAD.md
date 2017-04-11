@@ -1,5 +1,5 @@
-#POS-System
-#Software Architecture Document
+# POS-System
+# Software Architecture Document
 
 
 ## 1. Introduction
