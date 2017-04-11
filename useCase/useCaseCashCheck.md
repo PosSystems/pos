@@ -1,5 +1,5 @@
-#Use-Case Specification: Cash Check
-##Table of Contents
+# Use-Case Specification: Cash Check
+## Table of Contents
 tbd    
 
 ### 1. Get information
