@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblReceiptDetails;
+
 /**
  * Home object for domain model class TblReceiptDetails.
- * @see com.pos.system.dao.TblReceiptDetails
+ * 
+ * @see com.pos.system.model.TblReceiptDetails
  * @author Hibernate Tools
  */
 public class TblReceiptDetailsHome {
@@ -92,7 +95,7 @@ public class TblReceiptDetailsHome {
 		log.debug("getting TblReceiptDetails instance with id: " + id);
 		try {
 			TblReceiptDetails instance = (TblReceiptDetails) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblReceiptDetails", id);
+					.get("com.pos.system.model.TblReceiptDetails", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,7 +112,7 @@ public class TblReceiptDetailsHome {
 		log.debug("finding TblReceiptDetails instance by example");
 		try {
 			List<TblReceiptDetails> results = (List<TblReceiptDetails>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblReceiptDetails").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblReceiptDetails").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

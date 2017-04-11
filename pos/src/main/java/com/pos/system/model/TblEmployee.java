@@ -1,4 +1,4 @@
-package com.pos.system.dao;
+package com.pos.system.model;
 // Generated Nov 30, 2016 5:14:00 PM by Hibernate Tools 5.2.0.Beta1
 
 import java.util.HashSet;

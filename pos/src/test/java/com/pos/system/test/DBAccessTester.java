@@ -1,7 +1,7 @@
 package com.pos.system.test;
 
-import com.pos.system.dao.TblEmployee;
 import com.pos.system.dao.TblEmployeeHome;
+import com.pos.system.model.TblEmployee;
 
 public class DBAccessTester {
 

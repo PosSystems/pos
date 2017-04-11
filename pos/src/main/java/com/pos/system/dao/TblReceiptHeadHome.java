@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblReceiptHead;
+
 /**
  * Home object for domain model class TblReceiptHead.
- * @see com.pos.system.dao.TblReceiptHead
+ * 
+ * @see com.pos.system.model.TblReceiptHead
  * @author Hibernate Tools
  */
 public class TblReceiptHeadHome {
@@ -92,7 +95,7 @@ public class TblReceiptHeadHome {
 		log.debug("getting TblReceiptHead instance with id: " + id);
 		try {
 			TblReceiptHead instance = (TblReceiptHead) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblReceiptHead", id);
+					.get("com.pos.system.model.TblReceiptHead", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,7 +112,7 @@ public class TblReceiptHeadHome {
 		log.debug("finding TblReceiptHead instance by example");
 		try {
 			List<TblReceiptHead> results = (List<TblReceiptHead>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblReceiptHead").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblReceiptHead").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

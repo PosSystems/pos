@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblOpeningBalance;
+
 /**
  * Home object for domain model class TblOpeningBalance.
- * @see com.pos.system.dao.TblOpeningBalance
+ * 
+ * @see com.pos.system.model.TblOpeningBalance
  * @author Hibernate Tools
  */
 public class TblOpeningBalanceHome {
@@ -92,7 +95,7 @@ public class TblOpeningBalanceHome {
 		log.debug("getting TblOpeningBalance instance with id: " + id);
 		try {
 			TblOpeningBalance instance = (TblOpeningBalance) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblOpeningBalance", id);
+					.get("com.pos.system.model.TblOpeningBalance", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,7 +112,7 @@ public class TblOpeningBalanceHome {
 		log.debug("finding TblOpeningBalance instance by example");
 		try {
 			List<TblOpeningBalance> results = (List<TblOpeningBalance>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblOpeningBalance").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblOpeningBalance").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

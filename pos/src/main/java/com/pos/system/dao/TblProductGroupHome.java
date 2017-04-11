@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblProductGroup;
+
 /**
  * Home object for domain model class TblProductGroup.
- * @see com.pos.system.dao.TblProductGroup
+ * 
+ * @see com.pos.system.model.TblProductGroup
  * @author Hibernate Tools
  */
 public class TblProductGroupHome {
@@ -92,7 +95,7 @@ public class TblProductGroupHome {
 		log.debug("getting TblProductGroup instance with id: " + id);
 		try {
 			TblProductGroup instance = (TblProductGroup) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblProductGroup", id);
+					.get("com.pos.system.model.TblProductGroup", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,7 +112,7 @@ public class TblProductGroupHome {
 		log.debug("finding TblProductGroup instance by example");
 		try {
 			List<TblProductGroup> results = (List<TblProductGroup>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblProductGroup").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblProductGroup").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

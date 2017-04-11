@@ -12,10 +12,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.pos.system.model.TblEmployee;
+
 /**
  * Home object for domain model class TblEmployee.
  * 
- * @see com.pos.system.dao.TblEmployee
+ * @see com.pos.system.model.TblEmployee
  * @author Hibernate Tools
  */
 public class TblEmployeeHome {
@@ -44,6 +46,7 @@ public class TblEmployeeHome {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
 			session.persist(transientInstance);
+			session.flush();
 			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -102,7 +105,7 @@ public class TblEmployeeHome {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			TblEmployee instance = (TblEmployee) session.get("com.pos.system.dao.TblEmployee", id);
+			TblEmployee instance = (TblEmployee) session.get("com.pos.system.model.TblEmployee", id);
 			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -120,7 +123,7 @@ public class TblEmployeeHome {
 		log.debug("finding TblEmployee instance by example");
 		try {
 			List<TblEmployee> results = (List<TblEmployee>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblEmployee").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblEmployee").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

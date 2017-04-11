@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblTitle;
+
 /**
  * Home object for domain model class TblTitle.
- * @see com.pos.system.dao.TblTitle
+ * 
+ * @see com.pos.system.model.TblTitle
  * @author Hibernate Tools
  */
 public class TblTitleHome {
@@ -91,7 +94,7 @@ public class TblTitleHome {
 	public TblTitle findById(java.lang.Integer id) {
 		log.debug("getting TblTitle instance with id: " + id);
 		try {
-			TblTitle instance = (TblTitle) sessionFactory.getCurrentSession().get("com.pos.system.dao.TblTitle", id);
+			TblTitle instance = (TblTitle) sessionFactory.getCurrentSession().get("com.pos.system.model.TblTitle", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,7 +111,7 @@ public class TblTitleHome {
 		log.debug("finding TblTitle instance by example");
 		try {
 			List<TblTitle> results = (List<TblTitle>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblTitle").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblTitle").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

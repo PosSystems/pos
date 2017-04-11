@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblVat;
+
 /**
  * Home object for domain model class TblVat.
- * @see com.pos.system.dao.TblVat
+ * 
+ * @see com.pos.system.model.TblVat
  * @author Hibernate Tools
  */
 public class TblVatHome {
@@ -91,7 +94,7 @@ public class TblVatHome {
 	public TblVat findById(java.lang.Integer id) {
 		log.debug("getting TblVat instance with id: " + id);
 		try {
-			TblVat instance = (TblVat) sessionFactory.getCurrentSession().get("com.pos.system.dao.TblVat", id);
+			TblVat instance = (TblVat) sessionFactory.getCurrentSession().get("com.pos.system.model.TblVat", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -108,7 +111,7 @@ public class TblVatHome {
 		log.debug("finding TblVat instance by example");
 		try {
 			List<TblVat> results = (List<TblVat>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblVat").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblVat").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

@@ -12,9 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 
+import com.pos.system.model.TblCashBalance;
+
 /**
  * Home object for domain model class TblCashBalance.
- * @see com.pos.system.dao.TblCashBalance
+ * 
+ * @see com.pos.system.model.TblCashBalance
  * @author Hibernate Tools
  */
 public class TblCashBalanceHome {
@@ -92,7 +95,7 @@ public class TblCashBalanceHome {
 		log.debug("getting TblCashBalance instance with id: " + id);
 		try {
 			TblCashBalance instance = (TblCashBalance) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblCashBalance", id);
+					.get("com.pos.system.model.TblCashBalance", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,7 +112,7 @@ public class TblCashBalanceHome {
 		log.debug("finding TblCashBalance instance by example");
 		try {
 			List<TblCashBalance> results = (List<TblCashBalance>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblCashBalance").add(create(instance)).list();
+					.createCriteria("com.pos.system.model.TblCashBalance").add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {
