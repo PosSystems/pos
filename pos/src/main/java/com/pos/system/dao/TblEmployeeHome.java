@@ -45,7 +45,8 @@ public class TblEmployeeHome {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			session.persist(transientInstance);
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -101,8 +102,10 @@ public class TblEmployeeHome {
 	public TblEmployee findById(int id) {
 		log.debug("getting TblEmployee instance with id: " + id);
 		try {
-			TblEmployee instance = (TblEmployee) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblEmployee", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblEmployee instance = (TblEmployee) session.get("com.pos.system.dao.TblEmployee", id);
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
