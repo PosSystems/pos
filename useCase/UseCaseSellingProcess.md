@@ -53,7 +53,7 @@ No postconditions.
 <!-- Link definitions -->
 [feature]: https://github.com/PosSystems/pos/blob/master/pos/features/sellingProcess.feature
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseSellingProcess.png
-[SRS]: https://github.com/PosSystems/pos/blob/master/Software%20Requirements%20Specification.pdf
+[SRS]: https://github.com/PosSystems/pos/blob/master/SRS.md
 [mockup1]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess1.png
 [mockup2]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess2.png
 [mockup3]:https://github.com/PosSystems/pos/blob/master/useCase/screenshots/UseCaseSellingProcess3.png
