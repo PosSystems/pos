@@ -1,5 +1,5 @@
-#Use-Case Specification: Close Check Accounts
-##Table of Contents
+# Use-Case Specification: Close Check Accounts
+## Table of Contents
 tbd    
 
 ### 1. Get information
