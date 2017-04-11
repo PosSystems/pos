@@ -1,5 +1,5 @@
-#Use-Case Specification: Cash Opening Entry
-##Table of Contents
+# Use-Case Specification: Cash Opening Entry
+## Table of Contents
 tbd    
 
 ### 1. Get information
@@ -16,7 +16,11 @@ Activity Diagram:
 
 ![flow for selling process][flow]
 
-Mock-Ups:
+Feature File:
+
+[Link to the Feature File][feature]
+
+Mock-Up:
 
 ![Link to Mock-Ups][mockup1]
 
@@ -47,4 +51,5 @@ n/a
 <!-- Link definitions -->
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashOpeningEntry.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/SRS.md
+[feature]: https://github.com/PosSystems/pos/blob/master/pos/features/cashOpeningEntry.feature
 [mockup1]: https://github.com/PosSystems/pos/blob/master/useCase/mockUp/UseCaseCashOpeningEntry.png
