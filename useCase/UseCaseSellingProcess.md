@@ -1,5 +1,5 @@
-#Use-Case Specification: Perform Selling Process
-##Table of Contents
+# Use-Case Specification: Perform Selling Process
+## Table of Contents
 tbd    
 
 ### 1. Get information
