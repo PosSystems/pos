@@ -5,18 +5,19 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblEmployee;
 
 /**
  * Home object for domain model class TblEmployee.
- * @see com.pos.system.dao.TblEmployee
+ * 
+ * @see com.pos.system.model.TblEmployee
  * @author Hibernate Tools
  */
 public class TblEmployeeHome {
@@ -26,18 +27,19 @@ public class TblEmployeeHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblEmployee transientInstance) {
 		log.debug("persisting TblEmployee instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.persist(transientInstance);
+			session.flush();
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -48,7 +50,11 @@ public class TblEmployeeHome {
 	public void attachDirty(TblEmployee instance) {
 		log.debug("attaching dirty TblEmployee instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(instance);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -59,7 +65,11 @@ public class TblEmployeeHome {
 	public void attachClean(TblEmployee instance) {
 		log.debug("attaching clean TblEmployee instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.lock(instance, LockMode.NONE);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -70,7 +80,11 @@ public class TblEmployeeHome {
 	public void delete(TblEmployee persistentInstance) {
 		log.debug("deleting TblEmployee instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.delete(persistentInstance);
+			session.flush();
+			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -81,7 +95,11 @@ public class TblEmployeeHome {
 	public TblEmployee merge(TblEmployee detachedInstance) {
 		log.debug("merging TblEmployee instance");
 		try {
-			TblEmployee result = (TblEmployee) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblEmployee result = (TblEmployee) session.merge(detachedInstance);
+			session.flush();
+			session.close();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -93,8 +111,10 @@ public class TblEmployeeHome {
 	public TblEmployee findById(int id) {
 		log.debug("getting TblEmployee instance with id: " + id);
 		try {
-			TblEmployee instance = (TblEmployee) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblEmployee", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblEmployee instance = (TblEmployee) session.get("com.pos.system.model.TblEmployee", id);
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -110,8 +130,11 @@ public class TblEmployeeHome {
 	public List<TblEmployee> findByExample(TblEmployee instance) {
 		log.debug("finding TblEmployee instance by example");
 		try {
-			List<TblEmployee> results = (List<TblEmployee>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblEmployee").add(create(instance)).list();
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<TblEmployee> results = (List<TblEmployee>) session.createCriteria("com.pos.system.model.TblEmployee")
+					.add(create(instance)).list();
+			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

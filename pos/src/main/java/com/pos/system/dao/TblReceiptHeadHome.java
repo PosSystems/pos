@@ -5,18 +5,19 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblReceiptHead;
 
 /**
  * Home object for domain model class TblReceiptHead.
- * @see com.pos.system.dao.TblReceiptHead
+ * 
+ * @see com.pos.system.model.TblReceiptHead
  * @author Hibernate Tools
  */
 public class TblReceiptHeadHome {
@@ -26,18 +27,19 @@ public class TblReceiptHeadHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblReceiptHead transientInstance) {
 		log.debug("persisting TblReceiptHead instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.persist(transientInstance);
+			session.flush();
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -48,7 +50,11 @@ public class TblReceiptHeadHome {
 	public void attachDirty(TblReceiptHead instance) {
 		log.debug("attaching dirty TblReceiptHead instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(instance);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -59,7 +65,11 @@ public class TblReceiptHeadHome {
 	public void attachClean(TblReceiptHead instance) {
 		log.debug("attaching clean TblReceiptHead instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.lock(instance, LockMode.NONE);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -70,7 +80,11 @@ public class TblReceiptHeadHome {
 	public void delete(TblReceiptHead persistentInstance) {
 		log.debug("deleting TblReceiptHead instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.delete(persistentInstance);
+			session.flush();
+			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -81,7 +95,11 @@ public class TblReceiptHeadHome {
 	public TblReceiptHead merge(TblReceiptHead detachedInstance) {
 		log.debug("merging TblReceiptHead instance");
 		try {
-			TblReceiptHead result = (TblReceiptHead) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblReceiptHead result = (TblReceiptHead) session.merge(detachedInstance);
+			session.flush();
+			session.close();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -93,8 +111,10 @@ public class TblReceiptHeadHome {
 	public TblReceiptHead findById(java.lang.Integer id) {
 		log.debug("getting TblReceiptHead instance with id: " + id);
 		try {
-			TblReceiptHead instance = (TblReceiptHead) sessionFactory.getCurrentSession()
-					.get("com.pos.system.dao.TblReceiptHead", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblReceiptHead instance = (TblReceiptHead) session.get("com.pos.system.model.TblReceiptHead", id);
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -110,8 +130,11 @@ public class TblReceiptHeadHome {
 	public List<TblReceiptHead> findByExample(TblReceiptHead instance) {
 		log.debug("finding TblReceiptHead instance by example");
 		try {
-			List<TblReceiptHead> results = (List<TblReceiptHead>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblReceiptHead").add(create(instance)).list();
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<TblReceiptHead> results = (List<TblReceiptHead>) session
+					.createCriteria("com.pos.system.model.TblReceiptHead").add(create(instance)).list();
+			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

@@ -2,13 +2,23 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory name="">
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+ <session-factory name="posSessionFactory">
+  <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
   <!-- Assume test is the database name -->
-  <property name="hibernate.connection.url">jdbc:mysql://localhost/test?createDatabaseIfNotExist=true</property>
-  <property name="hibernate.connection.username">root</property>
-  <property name="hibernate.connection.password">password</property>
+  <property name="hibernate.connection.url">jdbc:hsqldb:mem:test</property>
+  <property name="hibernate.connection.username">sa</property>
+  <property name="hibernate.connection.password"></property>
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.current_session_context_class">thread</property>
+  <mapping resource="hibernate/mappings/TblCashBalance.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblEmployee.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblOpeningBalance.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblProductGroup.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblReceiptDetails.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblReceiptHead.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblTitle.hbm.xml"></mapping>
+  <mapping resource="hibernate/mappings/TblVat.hbm.xml"></mapping>
  </session-factory>
 </hibernate-configuration>

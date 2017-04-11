@@ -5,18 +5,19 @@ import static org.hibernate.criterion.Example.create;
 
 import java.util.List;
 
-import javax.naming.InitialContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.pos.system.model.TblVat;
 
 /**
  * Home object for domain model class TblVat.
- * @see com.pos.system.dao.TblVat
+ * 
+ * @see com.pos.system.model.TblVat
  * @author Hibernate Tools
  */
 public class TblVatHome {
@@ -26,18 +27,19 @@ public class TblVatHome {
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
-		try {
-			return (SessionFactory) new InitialContext().lookup("SessionFactory");
-		} catch (Exception e) {
-			log.error("Could not locate SessionFactory in JNDI", e);
-			throw new IllegalStateException("Could not locate SessionFactory in JNDI");
-		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
+				.buildSessionFactory();
+		return sessionFactory;
 	}
 
 	public void persist(TblVat transientInstance) {
 		log.debug("persisting TblVat instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.persist(transientInstance);
+			session.flush();
+			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -48,7 +50,11 @@ public class TblVatHome {
 	public void attachDirty(TblVat instance) {
 		log.debug("attaching dirty TblVat instance");
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.saveOrUpdate(instance);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -59,7 +65,11 @@ public class TblVatHome {
 	public void attachClean(TblVat instance) {
 		log.debug("attaching clean TblVat instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.lock(instance, LockMode.NONE);
+			session.flush();
+			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -70,7 +80,11 @@ public class TblVatHome {
 	public void delete(TblVat persistentInstance) {
 		log.debug("deleting TblVat instance");
 		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			session.delete(persistentInstance);
+			session.flush();
+			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -81,7 +95,11 @@ public class TblVatHome {
 	public TblVat merge(TblVat detachedInstance) {
 		log.debug("merging TblVat instance");
 		try {
-			TblVat result = (TblVat) sessionFactory.getCurrentSession().merge(detachedInstance);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblVat result = (TblVat) session.merge(detachedInstance);
+			session.flush();
+			session.close();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -93,7 +111,11 @@ public class TblVatHome {
 	public TblVat findById(java.lang.Integer id) {
 		log.debug("getting TblVat instance with id: " + id);
 		try {
-			TblVat instance = (TblVat) sessionFactory.getCurrentSession().get("com.pos.system.dao.TblVat", id);
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			TblVat instance = (TblVat) session.get("com.pos.system.model.TblVat", id);
+			session.flush();
+			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -109,8 +131,12 @@ public class TblVatHome {
 	public List<TblVat> findByExample(TblVat instance) {
 		log.debug("finding TblVat instance by example");
 		try {
-			List<TblVat> results = (List<TblVat>) sessionFactory.getCurrentSession()
-					.createCriteria("com.pos.system.dao.TblVat").add(create(instance)).list();
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<TblVat> results = (List<TblVat>) session.createCriteria("com.pos.system.model.TblVat")
+					.add(create(instance)).list();
+			session.flush();
+			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
 		} catch (RuntimeException re) {

@@ -3,12 +3,12 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Nov 30, 2016 5:14:15 PM by Hibernate Tools 5.2.0.Beta1 -->
 <hibernate-mapping>
-    <class name="TblEmployee" table="tblEmployee" catalog="test" optimistic-lock="version">
+    <class name="com.pos.system.model.TblEmployee" table="tblEmployee" catalog="test" optimistic-lock="version">
         <id name="intId" type="int">
             <column name="intId" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="tblTitle" class="TblTitle" fetch="select">
+        <many-to-one name="tblTitle" class="com.pos.system.model.TblTitle" fetch="select">
             <column name="intTitleId" />
         </many-to-one>
         <property name="strGivenName" type="string">
@@ -36,19 +36,19 @@
             <key>
                 <column name="intEmployeeId" not-null="true" />
             </key>
-            <one-to-many class="TblCashBalance" />
+            <one-to-many class="com.pos.system.model.TblCashBalance" />
         </set>
         <set name="tblOpeningBalances" table="tblOpeningBalance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="intEmployeeId" not-null="true" />
             </key>
-            <one-to-many class="TblOpeningBalance" />
+            <one-to-many class="com.pos.system.model.TblOpeningBalance" />
         </set>
         <set name="tblReceiptHeads" table="tblReceiptHead" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="intEmployeeId" not-null="true" />
             </key>
-            <one-to-many class="TblReceiptHead" />
+            <one-to-many class="com.pos.system.model.TblReceiptHead" />
         </set>
     </class>
 </hibernate-mapping>
