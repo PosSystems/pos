@@ -22,7 +22,7 @@ public class DBAccess<ModelClass> {
 		this.type = type;
 	}
 
-	protected SessionFactory getSessionFactory() {
+	public SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
 				.buildSessionFactory();
 		return sessionFactory;

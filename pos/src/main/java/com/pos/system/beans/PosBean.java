@@ -7,6 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import com.pos.system.dao.DBAccess;
+import com.pos.system.model.TblEmployee;
+import com.pos.system.model.TblProductGroup;
+import com.pos.system.model.TblVat;
+
 @ManagedBean
 @ViewScoped
 public class PosBean {
@@ -24,9 +29,14 @@ public class PosBean {
 	private double _dayTotal;
 	private double _cashCheckDifference;
 	private double _cashCheckCount;
+	private DBAccess<TblEmployee> _employeeDao;
+	private DBAccess<TblProductGroup> _productGroupDao;
+	private DBAccess<TblVat> _vatDao;
 
 	@PostConstruct
 	public void init() {
+		// fill_in_memory_db();
+
 		_employees = new ArrayList<Employee>();
 		_productGroups = new ArrayList<ProductGroup>();
 
@@ -34,6 +44,7 @@ public class PosBean {
 		_employees.add(new Employee(1, "Sven"));
 		_employees.add(new Employee(2, "Dominik"));
 		_employees.add(new Employee(3, "Sandra"));
+
 		_productGroups.add(new ProductGroup(1, "Bridgekameras"));
 		_productGroups.add(new ProductGroup(2, "Taschen"));
 		_productGroups.add(new ProductGroup(3, "Speicherkarten"));
@@ -73,6 +84,81 @@ public class PosBean {
 
 	public void calculateCashCheckDifference() {
 		_cashCheckDifference = Math.round(100 * (_cashCheckCount - _dayTotal)) / 100.0;
+	}
+
+	public void fill_in_memory_db() {
+		TblEmployee newEmployee = new TblEmployee();
+		_employeeDao = new DBAccess<>(TblEmployee.class);
+
+		newEmployee.setStrGivenName("");
+		newEmployee.setStrSurname("");
+		newEmployee.setIntId(0);
+		_employeeDao.persist(newEmployee);
+
+		newEmployee.setStrGivenName("Sven");
+		newEmployee.setStrSurname("Baumann");
+		newEmployee.setIntId(1);
+		_employeeDao.persist(newEmployee);
+
+		newEmployee.setStrGivenName("Sandra");
+		newEmployee.setStrSurname("Kramlich");
+		newEmployee.setIntId(2);
+		_employeeDao.persist(newEmployee);
+
+		newEmployee.setStrGivenName("Dominik");
+		newEmployee.setStrSurname("Schneider");
+		newEmployee.setIntId(3);
+		_employeeDao.persist(newEmployee);
+
+		TblVat newVat = new TblVat();
+		_vatDao = new DBAccess<>(TblVat.class);
+
+		newVat.setIntId(1);
+		newVat.setFltVt(7);
+		_vatDao.persist(newVat);
+
+		newVat.setIntId(2);
+		newVat.setFltVt(19);
+		_vatDao.persist(newVat);
+
+		TblProductGroup newProductGroup = new TblProductGroup();
+		_productGroupDao = new DBAccess<>(TblProductGroup.class);
+
+		newProductGroup.setIntId(1);
+		newProductGroup.setTblVat(_vatDao.findById(1));
+		newProductGroup.setStName("Bridgekameras");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
+
+		newProductGroup.setIntId(2);
+		newProductGroup.setTblVat(_vatDao.findById(1));
+		newProductGroup.setStName("Taschen");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
+
+		newProductGroup.setIntId(3);
+		newProductGroup.setTblVat(_vatDao.findById(1));
+		newProductGroup.setStName("Speicherkarten");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
+
+		newProductGroup.setIntId(4);
+		newProductGroup.setTblVat(_vatDao.findById(2));
+		newProductGroup.setStName("Camcorder");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
+
+		newProductGroup.setIntId(5);
+		newProductGroup.setTblVat(_vatDao.findById(2));
+		newProductGroup.setStName("Digitlcameras");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
+
+		newProductGroup.setIntId(6);
+		newProductGroup.setTblVat(_vatDao.findById(2));
+		newProductGroup.setStName("SLR-Kameras");
+		newProductGroup.setFltProfitMargin(0);
+		_productGroupDao.persist(newProductGroup);
 	}
 
 	public List<Employee> getEmployees() {
