@@ -2,15 +2,15 @@ package com.pos.system.test;
 
 import java.util.ArrayList;
 
-import com.pos.system.dao.TblEmployeeHome;
+import com.pos.system.dao.DBAccess;
 import com.pos.system.model.TblEmployee;
 
 public class DBAccessTester {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		TblEmployee testEmployee = new TblEmployee();
-		TblEmployeeHome employeeDao = new TblEmployeeHome();
+		// TblEmployeeHome employeeDao = new TblEmployeeHome();
+		DBAccess<TblEmployee> employeeDao = new DBAccess<>(TblEmployee.class);
 
 		testEmployee.setStrGivenName("Max");
 		testEmployee.setStrSurname("Mustermann");
@@ -45,6 +45,7 @@ public class DBAccessTester {
 		for (TblEmployee tblEmployee : exampleEmployees) {
 			System.out.println(tblEmployee.getStrGivenName() + ' ' + tblEmployee.getStrSurname());
 		}
+
 	}
 
 }

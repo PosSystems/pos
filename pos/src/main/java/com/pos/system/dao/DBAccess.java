@@ -1,5 +1,4 @@
 package com.pos.system.dao;
-// Generated Nov 30, 2016 5:15:19 PM by Hibernate Tools 5.2.0.Beta1
 
 import static org.hibernate.criterion.Example.create;
 
@@ -12,19 +11,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.pos.system.model.TblTitle;
-
-/**
- * Home object for domain model class TblTitle.
- * 
- * @see com.pos.system.model.TblTitle
- * @author Hibernate Tools
- */
-public class TblTitleHome {
-
-	private static final Log log = LogFactory.getLog(TblTitleHome.class);
+public class DBAccess<ModelClass> {
+	private static final Log log = LogFactory.getLog(DBAccess.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
+
+	private Class<ModelClass> type;
+
+	public DBAccess(Class<ModelClass> type) {
+		this.type = type;
+	}
 
 	protected SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml")
@@ -32,8 +28,8 @@ public class TblTitleHome {
 		return sessionFactory;
 	}
 
-	public void persist(TblTitle transientInstance) {
-		log.debug("persisting TblTitle instance");
+	public void persist(ModelClass transientInstance) {
+		log.debug("persisting " + transientInstance.toString() + " instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
@@ -47,8 +43,8 @@ public class TblTitleHome {
 		}
 	}
 
-	public void attachDirty(TblTitle instance) {
-		log.debug("attaching dirty TblTitle instance");
+	public void attachDirty(ModelClass instance) {
+		log.debug("attaching dirty " + instance.toString() + " instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
@@ -62,8 +58,8 @@ public class TblTitleHome {
 		}
 	}
 
-	public void attachClean(TblTitle instance) {
-		log.debug("attaching clean TblTitle instance");
+	public void attachClean(ModelClass instance) {
+		log.debug("attaching clean ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
@@ -77,8 +73,8 @@ public class TblTitleHome {
 		}
 	}
 
-	public void delete(TblTitle persistentInstance) {
-		log.debug("deleting TblTitle instance");
+	public void delete(ModelClass persistentInstance) {
+		log.debug("deleting ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
@@ -92,12 +88,12 @@ public class TblTitleHome {
 		}
 	}
 
-	public TblTitle merge(TblTitle detachedInstance) {
-		log.debug("merging TblTitle instance");
+	public ModelClass merge(ModelClass detachedInstance) {
+		log.debug("merging ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			TblTitle result = (TblTitle) session.merge(detachedInstance);
+			ModelClass result = (ModelClass) session.merge(detachedInstance);
 			session.flush();
 			session.close();
 			log.debug("merge successful");
@@ -108,13 +104,13 @@ public class TblTitleHome {
 		}
 	}
 
-	public TblTitle findById(java.lang.Integer id) {
-		log.debug("getting TblTitle instance with id: " + id);
+	public ModelClass findById(int id) {
+		log.debug("getting ModelClass instance with id: " + id);
 		try {
+			// getClass().getg
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			TblTitle instance = (TblTitle) session.get("com.pos.system.model.TblTitle", id);
-			session.flush();
+			ModelClass instance = (ModelClass) session.get(type.getName(), id);
 			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -128,14 +124,13 @@ public class TblTitleHome {
 		}
 	}
 
-	public List<TblTitle> findByExample(TblTitle instance) {
-		log.debug("finding TblTitle instance by example");
+	public List<ModelClass> findByExample(ModelClass instance) {
+		log.debug("finding ModelClass instance by example");
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();
-			List<TblTitle> results = (List<TblTitle>) session.createCriteria("com.pos.system.model.TblTitle")
+			List<ModelClass> results = (List<ModelClass>) session.createCriteria(instance.getClass().getName())
 					.add(create(instance)).list();
-			session.flush();
 			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
@@ -144,4 +139,8 @@ public class TblTitleHome {
 			throw re;
 		}
 	}
+
+	private DBAccess() {
+	}
+
 }
