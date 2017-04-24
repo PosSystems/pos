@@ -52,7 +52,7 @@ No postconditions.
 
 ### 7. Function Points
 We calculated the function points with the following table from TINY TOOLS. The Use Case Register has
-25,2 points.
+92,4 points.
 ![Function-Point][fp]
 
 <!-- Link definitions -->
