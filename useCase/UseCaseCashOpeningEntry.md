@@ -48,7 +48,13 @@ n/a
 ### 6. Extension Points
 n/a
 
+### 7. Function Points
+We calculated the function points with the following table from TINY TOOLS. The Use Case Register has
+25,2 points.
+![Function-Point][fp]
+
 <!-- Link definitions -->
+[fp]: https://github.com/PosSystems/pos/blob/master/useCase/FP/FPCashOpeningEntry.PNG
 [flow]: https://github.com/PosSystems/pos/blob/master/useCase/flowChart/useCaseCashOpeningEntry.png
 [SRS]: https://github.com/PosSystems/pos/blob/master/SRS.md
 [feature]: https://github.com/PosSystems/pos/blob/master/pos/features/cashOpeningEntry.feature
