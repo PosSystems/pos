@@ -8,21 +8,24 @@ import static org.junit.Assert.fail;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.pos.system.dao.DBAccess;
+import com.pos.system.model.TblCashBalance;
 import com.pos.system.model.TblEmployee;
 
 public class DBAccessTest {
-	private TblEmployee testEmployee;
 	private static DBAccess<TblEmployee> employeeDao;
+	private static DBAccess<TblCashBalance> cashBalanceDao;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
 		employeeDao = new DBAccess<>(TblEmployee.class);
+		cashBalanceDao = new DBAccess<>(TblCashBalance.class);
 	}
 
 	@Test
@@ -30,7 +33,7 @@ public class DBAccessTest {
 		PrintStream oldSysOut = System.out;
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outStream));
-		testEmployee = new TblEmployee();
+		TblEmployee testEmployee = new TblEmployee();
 		testEmployee.setStrGivenName("Max");
 		testEmployee.setStrSurname("Mustermann");
 		testEmployee.setIntId(1);
@@ -40,6 +43,9 @@ public class DBAccessTest {
 		testEmployee.setIntId(2);
 		employeeDao.persist(testEmployee);
 		assertThat(outStream.toString(), containsString("Hibernate: insert into tblEmployee"));
+		TblCashBalance testCashBalance = new TblCashBalance(testEmployee, new Date(2017, 2, 14), 10);
+		cashBalanceDao.persist(testCashBalance);
+		assertThat(outStream.toString(), containsString("Hibernate: insert into tblCashBalance"));
 		System.setOut(oldSysOut);
 	}
 
