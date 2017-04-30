@@ -2,11 +2,13 @@ package com.pos.system.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.pos.system.beans.Article;
@@ -54,7 +56,6 @@ public class PosBeanTest {
 
 	@Test
 	public void testAddArticle() {
-		fail("Not yet implemented");
 		posBean.setSelectedQuantity(4);
 		posBean.setSelectedProductGroupObject(new ProductGroup(4, "Camcorder"));
 		posBean.setSelectedPrice(10);
@@ -68,27 +69,58 @@ public class PosBeanTest {
 
 	@Test
 	public void testCalculateLumpSumPrice() {
-		fail("Not yet implemented");
+		setUpArticles();
+		posBean.calculateLumpSumPrice();
+		assertEquals(45, posBean.getLumpSumPrice(), 0.0001);
 	}
 
 	@Test
 	public void testCalculateDrawback() {
-		fail("Not yet implemented");
+		testCalculateLumpSumPrice();
+		posBean.setGiven(47.32);
+		posBean.calculateDrawback();
+		assertEquals(2.32, posBean.getDrawback(), 0.001);
 	}
 
 	@Test
 	public void testReset() {
-		fail("Not yet implemented");
+		testCalculateLumpSumPrice();
+		posBean.reset();
+		assertEquals(45, posBean.getDayTotal(), 0.001);
+		assertEquals(0, posBean.getGiven(), 0);
+		assertEquals(0, posBean.getDrawback(), 0);
+		assertTrue(posBean.getArticles().isEmpty());
+		testCalculateLumpSumPrice();
+		posBean.reset();
+		assertEquals(90, posBean.getDayTotal(), 0.001);
+		assertEquals(0, posBean.getGiven(), 0);
+		assertEquals(0, posBean.getDrawback(), 0);
+		assertTrue(posBean.getArticles().isEmpty());
 	}
 
 	@Test
 	public void testCalculateCashCheckDifference() {
-		fail("Not yet implemented");
+		posBean.setCashCheckCount(100);
+		testReset();
+		posBean.calculateCashCheckDifference();
+		assertEquals(10, posBean.getCashCheckDifference(), 0.001);
 	}
 
+	@Ignore
 	@Test
 	public void testFill_in_memory_db() {
 		fail("Not yet implemented");
+	}
+
+	private void setUpArticles() {
+		posBean.setSelectedQuantity(4);
+		posBean.setSelectedProductGroupObject(new ProductGroup(4, "Camcorder"));
+		posBean.setSelectedPrice(10);
+		posBean.addArticle();
+		posBean.setSelectedQuantity(1);
+		posBean.setSelectedProductGroupObject(new ProductGroup(4, "Bridgekameras"));
+		posBean.setSelectedPrice(5);
+		posBean.addArticle();
 	}
 
 }
