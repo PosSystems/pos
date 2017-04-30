@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class DBAccess<ModelClass> {
@@ -32,9 +33,9 @@ public class DBAccess<ModelClass> {
 		log.debug("persisting " + transientInstance.toString() + " instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			session.persist(transientInstance);
-			session.flush();
+			transaction.commit();
 			session.close();
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -47,9 +48,9 @@ public class DBAccess<ModelClass> {
 		log.debug("attaching dirty " + instance.toString() + " instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			session.saveOrUpdate(instance);
-			session.flush();
+			transaction.commit();
 			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
@@ -62,9 +63,9 @@ public class DBAccess<ModelClass> {
 		log.debug("attaching clean ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			session.lock(instance, LockMode.NONE);
-			session.flush();
+			transaction.commit();
 			session.close();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
@@ -77,9 +78,9 @@ public class DBAccess<ModelClass> {
 		log.debug("deleting ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			session.delete(persistentInstance);
-			session.flush();
+			transaction.commit();
 			session.close();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
@@ -92,9 +93,9 @@ public class DBAccess<ModelClass> {
 		log.debug("merging ModelClass instance");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			ModelClass result = (ModelClass) session.merge(detachedInstance);
-			session.flush();
+			transaction.commit();
 			session.close();
 			log.debug("merge successful");
 			return result;
@@ -107,10 +108,10 @@ public class DBAccess<ModelClass> {
 	public ModelClass findById(int id) {
 		log.debug("getting ModelClass instance with id: " + id);
 		try {
-			// getClass().getg
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			ModelClass instance = (ModelClass) session.get(type.getName(), id);
+			transaction.commit();
 			session.close();
 			if (instance == null) {
 				log.debug("get successful, no instance found");
@@ -128,9 +129,10 @@ public class DBAccess<ModelClass> {
 		log.debug("finding ModelClass instance by example");
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			Transaction transaction = session.beginTransaction();
 			List<ModelClass> results = (List<ModelClass>) session.createCriteria(instance.getClass().getName())
 					.add(create(instance)).list();
+			transaction.commit();
 			session.close();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
