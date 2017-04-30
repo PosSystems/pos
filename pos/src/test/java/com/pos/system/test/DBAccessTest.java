@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,16 +25,12 @@ public class DBAccessTest {
 		employeeDao = new DBAccess<>(TblEmployee.class);
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		testEmployee = new TblEmployee();
-	}
-
 	@Test
 	public void testPersist() {
 		PrintStream oldSysOut = System.out;
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outStream));
+		testEmployee = new TblEmployee();
 		testEmployee.setStrGivenName("Max");
 		testEmployee.setStrSurname("Mustermann");
 		testEmployee.setIntId(1);
@@ -56,7 +51,6 @@ public class DBAccessTest {
 
 	@Test
 	public void testFindById() {
-		testPersist();
 		TblEmployee employee = employeeDao.findById(1);
 		assertThat(employee.getIntId(), is(1));
 		assertThat(employee.getStrGivenName(), is("Max"));
@@ -65,7 +59,6 @@ public class DBAccessTest {
 
 	@Test
 	public void testFindByExample() {
-		testPersist();
 		TblEmployee employee = new TblEmployee();
 		employee.setStrSurname("Mustermann");
 		ArrayList<TblEmployee> exampleEmployees = (ArrayList<TblEmployee>) employeeDao.findByExample(employee);
