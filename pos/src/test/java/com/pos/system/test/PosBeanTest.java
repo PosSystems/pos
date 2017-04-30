@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pos.system.beans.Article;
 import com.pos.system.beans.Employee;
 import com.pos.system.beans.PosBean;
 import com.pos.system.beans.ProductGroup;
@@ -19,6 +20,7 @@ public class PosBeanTest {
 	@Before
 	public void setUp() {
 		posBean = new PosBean();
+		posBean.init();
 	}
 
 	@Test
@@ -53,6 +55,15 @@ public class PosBeanTest {
 	@Test
 	public void testAddArticle() {
 		fail("Not yet implemented");
+		posBean.setSelectedQuantity(4);
+		posBean.setSelectedProductGroupObject(new ProductGroup(4, "Camcorder"));
+		posBean.setSelectedPrice(10);
+		posBean.addArticle();
+		List<Article> articles = posBean.getArticles();
+		assertEquals("Newest Article does not equal added Article",
+				new Article(4, new ProductGroup(4, "Camcorder"), 10), articles.get(articles.size() - 1));
+		assertEquals("_selectedQuantity was not reset", 1, posBean.getSelectedQuantity(), 0);
+		assertEquals("_selectedPrice was not reset", 0, posBean.getSelectedPrice(), 0);
 	}
 
 	@Test
