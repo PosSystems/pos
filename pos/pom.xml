@@ -14,7 +14,8 @@
 		<hibernate.version>5.2.5.Final</hibernate.version>
 		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
-		<sonar.host.url>http://localhost:9000/</sonar.host.url>
+		<sonar.host.url>http://193.196.7.25</sonar.host.url>
+		<sonar.language>java</sonar.language>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
