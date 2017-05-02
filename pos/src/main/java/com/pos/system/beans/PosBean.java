@@ -24,16 +24,18 @@ public class PosBean {
 	private double _dayTotal;
 	private double _cashCheckDifference;
 	private double _cashCheckCount;
+	private double _openingAmount;
+	private boolean _openingEntryDone;
+	private Count _count;
 
 	@PostConstruct
 	public void init() {
 		_employees = new ArrayList<Employee>();
-		_productGroups = new ArrayList<ProductGroup>();
-
 		_employees.add(new Employee(0, ""));
 		_employees.add(new Employee(1, "Sven"));
 		_employees.add(new Employee(2, "Dominik"));
 		_employees.add(new Employee(3, "Sandra"));
+		_productGroups = new ArrayList<ProductGroup>();
 		_productGroups.add(new ProductGroup(1, "Bridgekameras"));
 		_productGroups.add(new ProductGroup(2, "Taschen"));
 		_productGroups.add(new ProductGroup(3, "Speicherkarten"));
@@ -44,6 +46,8 @@ public class PosBean {
 		_selectedQuantity = 1;
 		_articles = new ArrayList<Article>();
 		_dayTotal = 0;
+		_openingEntryDone = false;
+		_count = new Count();
 	}
 
 	public void addArticle() {
@@ -71,8 +75,21 @@ public class PosBean {
 		_articles.clear();
 	}
 
+	public void finishOpeningEntry() {
+		_openingEntryDone = true;
+		_dayTotal += _openingAmount;
+	}
+
 	public void calculateCashCheckDifference() {
-		_cashCheckDifference = Math.round(100 * (_cashCheckCount - _dayTotal)) / 100.0;
+		// _cashCheckDifference = Math.round(100 * (_cashCheckCount -
+		// _dayTotal)) / 100.0;
+		_count.addCount();
+		_cashCheckDifference = Math.round(100 * (_count.getSum() - _dayTotal)) / 100.0;
+	}
+
+	public void resetCounts() {
+		_count = new Count();
+		_cashCheckDifference = 0;
 	}
 
 	public List<Employee> getEmployees() {
@@ -185,6 +202,30 @@ public class PosBean {
 
 	public void setCashCheckCount(double _cashCheckCount) {
 		this._cashCheckCount = _cashCheckCount;
+	}
+
+	public double getOpeningAmount() {
+		return _openingAmount;
+	}
+
+	public void setOpeningAmount(double _openingAmount) {
+		this._openingAmount = _openingAmount;
+	}
+
+	public boolean isOpeningEntryDone() {
+		return _openingEntryDone;
+	}
+
+	public void setOpeningEntryDone(boolean _openingEntryDone) {
+		this._openingEntryDone = _openingEntryDone;
+	}
+
+	public Count getCount() {
+		return _count;
+	}
+
+	public void setCount(Count _count) {
+		this._count = _count;
 	}
 }
 
