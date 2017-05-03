@@ -4,13 +4,13 @@ tbd
 
 ### Introduction
 #### Purpose
-The purpose of the Master Test Plan is to gather all of the information necessary to plan and control the test
-effort for a given master test plan. It describes the approach to testing the software, and is the top­level plan
+The purpose of the Test Plan is to gather all of the information necessary to plan and control the test
+effort for a given master test plan. It describes the approach to testing the software, and is the top level plan
 generated and used by managers to direct the test effort.
-This Test Plan for the Leruka supports the following objectives:  
+This Test Plan for PoS supports the following objectives:  
 
 ● Functional testing for main menu  
-● Unit test for the implemented functions in unity  
+● Unit test for the implemented functions in our business classes
 ● Testing with end user
 
 #### Scope
@@ -59,10 +59,8 @@ Testing is done to provide a stable software. And we will fulfill the goal by th
 The listing below identifies those test items⎯software, hardware, and supporting product elements ⎯that have
 been identified as targets for testing. This list represents what items will be tested.  
 
-● Game logic  
-● Controller  
+● Business logic  
 ● Models  
-● Server  
 
 ### Outline of Planned Tests
 #### Outline of Test Inclusions  
@@ -83,14 +81,70 @@ n/a
 
 #### Initial Test Idea Catalogs and Other Reference Sources
 #### Testing Techniques and Types
-Functional Testing (User Interface Testing)
-Table
+##### Data and Database Integrity Testing
+n/a
 
-Unit Test
-Table
+#### Function Testing
+| | |
+|-|-|
+| **Technique Objective:** | Exercise target-of-test functionality, including data entry and processing. |
+| **Technique:** | Execute each use-case scenario�s individual use-case flows or functions and features, using valid and invalid data, to verify that:  <br>- the expected results occur when valid data is used <br> - the appropriate error or warning messages are displayed when 	invalid data is used <br> - each business rule is properly applied |
+| **Oracles:** | We assume  all tests to pass. |
+| **Required Tools:** | JUnit 4 |
+| **Success Criteria:** | JUnit test class for each business class |
+| **Special Considerations:** | n/a |
 
-Testing with end user
-Table
+
+#### Business Cycle Testing
+n/a
+
+#### User Interface Testing
+| | |
+|-|-|
+| **Technique Objective:** | Exercise target-of-test functionality, including navigation, data entry and processing using the means of the UI. |
+| **Technique:** | Execute each use-case scenario�s individual use-case flows or functions and features, using valid and invalid data, to verify that:  <br>- the expected results occur when valid data is used <br> - the appropriate error or warning messages are displayed when 	invalid data is used <br> - each business rule is properly applied |
+| **Oracles:** | We assume  all tests to pass. |
+| **Required Tools:** | - Selenium Driver <br> - Cucumber extension for Eclipse |
+| **Success Criteria:** | A cucumber file for each Use-Case that test every possible path. |
+| **Special Considerations:** | n/a |
+
+#### Performance Profiling
+n/a
+
+#### Load Testing
+n/a
+
+#### Stress Testing
+n/a
+
+#### Volume Testing
+n/a
+
+#### Security and Access Control Testing
+n/a
+
+#### Failover and Recovery Testing
+n/a
+
+#### Configuration Testing
+n/a
+
+#### Installation Testing
+n/a
+
+
+## Entry and Exit Criteria
+
+### Test Plan
+
+#### Test Plan Entry Criteria
+n/a
+
+#### Test Plan Exit Criteria
+n/a
+
+#### Suspension and resumption criteria
+n/a
 
 ### Deliverables
 #### Test Evaluation Summaries
@@ -100,7 +154,7 @@ Test evaluation is done by hand directly after the test executed.
 Test coverage is reported on our SonarQube project.
 
 #### Perceived Quality Reports
-For showing quality we also use ...
+n/a
 
 #### Incident Logs and Change Requests
 n/a
@@ -112,46 +166,62 @@ n/a
 n/a
 
 #### Detailed Test Results
-tbd
+n/a
 
 ### Testing Workflow
 Unit tests are run automatically, we start the functional tests or perform end user tests when we think it is necessary.
 
 ### Environmental Needs
 #### Base System Hardware
-The following table sets forth the system resources for the test effort presented in this Test Plan.
-Table
+Computer with working internet connection.
 
 #### Base Software Elements in the Test Environment
 The following base software elements are required in the test environment for this Test Plan.
-Table
+| Software Element Name | Version | Type and Other Notes |
+| - | - | - |
+| Silenium Webdriver | current | Chrome Driver |
+| Maven | current | For Downloading missing Test Dependencies |
 
 #### Productivity and Support Tools
 The following tools will be employed to support the test process for this Test Plan.
-Table
+| Tool Category or Type | Tool Brand Name | Vendor or In-house | Version |
+|-----------------------|-----------------|--------------------|---------|
+| Project Management | JIRA | Atlassasin | |
+| DBMS tools | **???phpmyadmin???** | | |
+| etc | | |
 
 #### Test Environment Configurations
-The following Test Environment Configurations needs to be provided and supported for this project.
-Table
+n/a
 
 ### Responsibilities, Staffing, and Training Needs
 #### People and Roles
-This table shows the staffing assumptions for the test effort.
-Table
+We already announced this in our blog post ["RUP roles and technology"](https://possystemsweb.wordpress.com/2016/10/15/technologies-and-team-roles/).
 
 ### Staffing and Training Needs
-This section outlines how to approach staffing and training the test roles for the project.
+n/a
 
 #### Iteration Milestones
-Table
+| Milestone | Planned Start Date | Actual Start Date | Planned End Date | Actual End Date |
+|-----------|--------------------|-------------------|------------------|-----------------|
+| Iteration starts | 25.04.2017 | | | |
+| > 20% Test Coverage | 25.04.2017 | 25.04.2017 | 21.06.2017 | 03.05.2017 |
+| Have Functional Tests | 25.04.2017 | 25.04.2017 | 21.06.2017 | **tbd** |
+| Have Unit Tests | 25.04.2017 | 25.04.2017 | 21.06.2017 | **tbd** |
+| Have **tbd/WHATEVER** Tests | 25.04.2017 | 25.04.2017 | 21.06.2017 | **tbd** |
+| Tests integrated in CI | 25.04.2017 | 25.04.2017 | 21.06.2017 | **tbd** |
+| Iteration ends | | | 21.06.2017 | |
+
 
 #### Risks, Dependencies, Assumptions, and Constraints
-Table
+| Risk | Mitigation Strategy | Contingency (Risk is realized) |
+|------|---------------------|--------------------------------|
+| Test data proves to be inadequate. | Tester will indicate what is required and will ensure to use a full set of suitable and protected test data. | Redefine test data |
+| Database is corrupt | Database-Admin will endeavor to keep data clean and make regularly full database backups. | Restore database |
 
 ### Appendix
 #### Cyclomatic Complexity
-Graph
+n/a
 
 #### Code Style
-Diagram
+n/a
 
