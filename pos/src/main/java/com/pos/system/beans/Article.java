@@ -38,4 +38,26 @@ public class Article {
 	public void setPrice(double _price) {
 		this._price = _price;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Article article = (Article) obj;
+			if (this._price != article._price) {
+				return false;
+			}
+			if (this._quantity != article._quantity) {
+				return false;
+			}
+			if (this._productGroup == null && article._productGroup != null) {
+				return false;
+			}
+			if (!this._productGroup.equals(article._productGroup)) {
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
