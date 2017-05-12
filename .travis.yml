@@ -1,3 +1,5 @@
 language: java
 
-script: cd pos/ && mvn sonar:sonar
+script: 
+    -cd pos/
+    -mvn package sonar:sonar
