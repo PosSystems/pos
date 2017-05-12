@@ -7,7 +7,7 @@ script:
     - cd pos/
     - mvn package sonar:sonar
 after_success:
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    - if [ "$TRAVIS_BRANCH" == "travis" ]; then
       docker build -t pos .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker tag pos possystem/pos;
