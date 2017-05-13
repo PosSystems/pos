@@ -11,7 +11,7 @@ public class TblVat implements java.io.Serializable {
 
 	private Integer intId;
 	private float fltVt;
-	private Set<TblProductGroup> tblProductGroups = new HashSet<TblProductGroup>(0);
+	private Set<TblProductGroup> tblProductGroup = new HashSet<TblProductGroup>(0);
 
 	public TblVat() {
 	}
@@ -22,7 +22,7 @@ public class TblVat implements java.io.Serializable {
 
 	public TblVat(float fltVt, Set<TblProductGroup> tblProductGroups) {
 		this.fltVt = fltVt;
-		this.tblProductGroups = tblProductGroups;
+		this.tblProductGroup = tblProductGroups;
 	}
 
 	public Integer getIntId() {
@@ -41,12 +41,12 @@ public class TblVat implements java.io.Serializable {
 		this.fltVt = fltVt;
 	}
 
-	public Set<TblProductGroup> getTblProductGroups() {
-		return this.tblProductGroups;
+	public Set<TblProductGroup> getTblProductGroup() {
+		return this.tblProductGroup;
 	}
 
-	public void setTblProductGroups(Set<TblProductGroup> tblProductGroups) {
-		this.tblProductGroups = tblProductGroups;
+	public void setTblProductGroup(Set<TblProductGroup> tblProductGroups) {
+		this.tblProductGroup = tblProductGroups;
 	}
 
 }

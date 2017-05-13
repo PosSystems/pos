@@ -1,0 +1,15 @@
+sudo: required
+language: java
+jdk: oraclejdk8
+services:
+    - docker
+script: 
+    - cd pos/
+    - mvn package sonar:sonar
+after_success:
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker build -t pos .;
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker tag pos possystem/pos;
+      docker push possystem/pos;
+      fi

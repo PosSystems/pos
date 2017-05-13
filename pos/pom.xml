@@ -12,6 +12,10 @@
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.7.21</org.slf4j-version>
 		<hibernate.version>5.2.5.Final</hibernate.version>
+		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>
+		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
+		<sonar.host.url>http://193.196.7.25</sonar.host.url>
+		<sonar.language>java</sonar.language>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -59,6 +63,7 @@
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -117,6 +122,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+		<dependency>
+    		<groupId>org.hsqldb</groupId>
+    		<artifactId>hsqldb</artifactId>
+    		<version>2.3.4</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
         <dependency>
             <groupId>info.cukes</groupId>
@@ -250,6 +262,30 @@
                 <configuration>
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+            	<groupId>org.jacoco</groupId>
+            	<artifactId>jacoco-maven-plugin</artifactId>
+            	<version>0.7.9</version>
+            	<configuration>
+            		<destFile>${basedir}/target/jacoco.exec</destFile>
+            		<dataFile>${basedir}/target/jacoco.exec</dataFile>
+            	</configuration>
+            	<executions>
+            		<execution>
+            			<id>jacoco-initialize</id>
+            			<goals>
+            				<goal>prepare-agent</goal>
+            			</goals>
+            		</execution>
+            		<execution>
+            			<id>jacoco-site</id>
+            			<phase>package</phase>
+            			<goals>
+            				<goal>report</goal>
+            			</goals>
+            		</execution>
+            	</executions>
             </plugin>
         </plugins>
     </build>
