@@ -6,7 +6,7 @@ public class Article {
 	private double _price;
 
 	public Article() {
-
+		// just in case
 	}
 
 	public Article(int quantity, ProductGroup productGroup, double price) {

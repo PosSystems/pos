@@ -5,7 +5,7 @@ public class ProductGroup {
 	private String _name;
 
 	public ProductGroup() {
-
+		// just in case
 	}
 
 	public ProductGroup(int id, String name) {
