@@ -98,6 +98,7 @@ public class PosBeanTest {
 		assertTrue(posBean.getArticles().isEmpty());
 	}
 
+	@Ignore
 	@Test
 	public void testCalculateCashCheckDifference() {
 		posBean.setCashCheckCount(100);
