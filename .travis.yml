@@ -5,7 +5,7 @@ services:
     - docker
 script: 
     - cd pos/
-    - mvn package sonar:sonar
+    - mvn clean package sonar:sonar
 after_success:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker build -t pos .;
