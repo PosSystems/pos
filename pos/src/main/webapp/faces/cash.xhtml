@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<link rel="stylesheet" href="../pos.css"/>
+	</h:head>	
+	
+	<h:form id="cash">
+		<p:layout fullPage="true">		
+			<!--p:layoutUnit position="north" size="129"-->
+			<p:layoutUnit position="north" size="105">
+				<p:menubar>
+			        <p:submenu label="Kasse">
+			            <p:menuitem value="Kassensturz" onclick="PF('dlgCashCheck').show();"
+			            immediate="true" update="frmDlgCashCheck"/>
+			            <p:menuitem value="Kassenabschluss" onclick="PF('dlgClosingCashAccounts').show();"
+			            immediate="true" update="frmDlgClosingCashAccounts"/>
+			        </p:submenu>
+			    </p:menubar>
+			    
+				<p:panelGrid style="width:100%">
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel for="employeeInput" value="Verkäufer"/>
+							<p:selectOneMenu id="employeeInput" value="#{posBean.cashier}">
+								<f:selectItems value="#{posBean.employees}" var="emp" 
+								itemLabel="#{emp.name}" itemValue="#{emp}"/>
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<!--p:row>
+						<p:column style="width:3em">
+							<p:outputLabel for="quantityInput" value="Menge"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel for="productGroupInput" value="Produktgruppe"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:inputText id="quantityInput" value="#{posBean.selectedQuantity}" 
+							style="width:3em"/>
+						</p:column>
+						<p:column>
+							<p:inputText id="productGroupInput" value="#{posBean.selectedProductGroupId}"
+							style="width:100%"/>
+						</p:column>
+					</p:row-->
+				</p:panelGrid>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="east" size="109">
+				<p:commandButton value="Zahlen" style="height:100%"
+				actionListener="#{posBean.calculateLumpSumPrice()}" update="frmDlgPayment"
+				oncomplete="PF('dlgPayment').show();" immediate="true"/>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="30%">
+				<p:dataGrid value="#{posBean.productGroups}" var="pg" columns="1">
+					<p:commandButton value="#{pg.name}" style="width:100%" immediate="true"
+					actionListener="#{posBean.setSelectedProductGroupObject(pg)}" 
+					oncomplete="PF('dlgPriceInput').show();"/>
+				</p:dataGrid>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="center" id="center">
+				<p:dataTable value="#{posBean.articles}" var="article" emptyMessage="">
+					<p:column headerText="Menge">
+						<p:outputLabel value="#{article.quantity}"/>
+					</p:column>
+					<p:column headerText="Artikel">
+						<p:outputLabel value="#{article.productGroup.name}"/>
+					</p:column>
+					<p:column headerText="Preis">
+						<p:outputLabel value="#{article.price}"/>
+					</p:column>
+				</p:dataTable>
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+	
+	<p:dialog header="Kasseneröffnung" widgetVar="dlgOpeningEntry" modal="true" closable="false"
+	resizable="false" visible="#{!posBean.openingEntryDone}">
+		<h:form>
+    		<p:outputLabel for="amountInput" value="Bitte geben Sie die Wechselgeldeinlage ein"/>
+    		<p:inputText id="amountInput" value="#{posBean.openingAmount}"/>
+    		<p:commandButton value="OK" update="cash" actionListener="#{posBean.finishOpeningEntry()}" 
+    		ajax="false" oncomplete="PF('dlgOpeningEntry').hide();"/>
+    	</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Preiseingabe" widgetVar="dlgPriceInput" modal="true" 
+	resizable="false">
+		<h:form>
+    		<p:outputLabel for="priceInput" value="Bitte geben Sie den Preis ein"/>
+    		<p:inputText id="priceInput" value="#{posBean.selectedPrice}"/>
+    		<p:commandButton value="OK" actionListener="#{posBean.addArticle}" 
+    		update="cash" ajax="false" oncomplete="PF('dlgPriceInput').hide();"/>
+    	</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Zahlung" widgetVar="dlgPayment" modal="true" resizable="false">
+		<h:form id="frmDlgPayment">
+    		<p:panelGrid columns="2">
+    			<p:outputLabel value="Zu zahlen"/>
+    			<p:outputLabel value="#{posBean.lumpSumPrice}"/>
+    			<p:outputLabel for="givenInput" value="Gegeben"/>
+    			<p:inputText id="givenInput" value="#{posBean.given}"/>
+    		</p:panelGrid>
+    		<p:commandButton actionListener="#{posBean.calculateDrawback()}"
+    		oncomplete="PF('dlgPayment').hide(); PF('dlgDrawback').show();"
+    		value="OK" update="frmDlgDrawback"/>
+    	</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Rückgeld" widgetVar="dlgDrawback" modal="true" resizable="false">
+		<h:form id="frmDlgDrawback">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Rückgeld"/>
+				<p:outputLabel value="#{posBean.drawback}"/>
+			</p:panelGrid>
+			<p:commandButton oncomplete="PF('dlgDrawback').hide();"
+			update="cash" ajax="false" value="OK" actionListener="#{posBean.reset()}"/>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Kassensturz" widgetVar="dlgCashCheck" modal="true" resizable="false">
+		<h:form id="frmDlgCashCheck">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Art"/>
+				<p:outputLabel value="Anzahl"/>
+				<p:outputLabel value="500€"/>
+				<p:inputText value="#{posBean.count.c500}"/>
+				<p:outputLabel value="200€"/>
+				<p:inputText value="#{posBean.count.c200}"/>
+				<p:outputLabel value="100€"/>
+				<p:inputText value="#{posBean.count.c100}"/>
+				<p:outputLabel value="50€"/>
+				<p:inputText value="#{posBean.count.c50}"/>
+				<p:outputLabel value="20€"/>
+				<p:inputText value="#{posBean.count.c20}"/>
+				<p:outputLabel value="10€"/>
+				<p:inputText value="#{posBean.count.c10}"/>
+				<p:outputLabel value="5€"/>
+				<p:inputText value="#{posBean.count.c5}"/>
+				<p:outputLabel value="2€"/>
+				<p:inputText value="#{posBean.count.c2}"/>
+				<p:outputLabel value="1€"/>
+				<p:inputText value="#{posBean.count.c1}"/>
+				<p:outputLabel value="0,5€"/>
+				<p:inputText value="#{posBean.count.c05}"/>
+				<p:outputLabel value="0,2€"/>
+				<p:inputText value="#{posBean.count.c02}"/>
+				<p:outputLabel value="0,1€"/>
+				<p:inputText value="#{posBean.count.c01}"/>
+				<p:outputLabel value="0,05€"/>
+				<p:inputText value="#{posBean.count.c005}"/>
+				<p:outputLabel value="0,02€"/>
+				<p:inputText value="#{posBean.count.c002}"/>
+				<p:outputLabel value="0,01€"/>
+				<p:inputText value="#{posBean.count.c001}"/>
+				<p:outputLabel value="Gezählt"/>
+				<p:outputLabel value="#{posBean.count.sum}"/>
+				<p:outputLabel value="Differenz"/>
+				<p:outputLabel value="#{posBean.cashCheckDifference}"/>
+			</p:panelGrid>
+			<p:commandButton value="OK" actionListener="#{posBean.calculateCashCheckDifference}"
+			update="frmDlgCashCheck"/>
+			<p:commandButton value="Abbrechen" actionListener="#{posBean.resetCounts()}" 
+			oncomplete="PF('dlgCashCheck').hide();"/>
+		</h:form>
+	</p:dialog>
+	
+	<p:dialog header="Kassenabschluss" widgetVar="dlgClosingCashAccounts" modal="true" resizable="false">
+		<h:form id="frmDlgClosingCashAccounts">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Art"/>
+				<p:outputLabel value="Anzahl"/>
+				<p:outputLabel value="500€"/>
+				<p:inputText value="#{posBean.count.c500}"/>
+				<p:outputLabel value="200€"/>
+				<p:inputText value="#{posBean.count.c200}"/>
+				<p:outputLabel value="100€"/>
+				<p:inputText value="#{posBean.count.c100}"/>
+				<p:outputLabel value="50€"/>
+				<p:inputText value="#{posBean.count.c50}"/>
+				<p:outputLabel value="20€"/>
+				<p:inputText value="#{posBean.count.c20}"/>
+				<p:outputLabel value="10€"/>
+				<p:inputText value="#{posBean.count.c10}"/>
+				<p:outputLabel value="5€"/>
+				<p:inputText value="#{posBean.count.c5}"/>
+				<p:outputLabel value="2€"/>
+				<p:inputText value="#{posBean.count.c2}"/>
+				<p:outputLabel value="1€"/>
+				<p:inputText value="#{posBean.count.c1}"/>
+				<p:outputLabel value="0,5€"/>
+				<p:inputText value="#{posBean.count.c05}"/>
+				<p:outputLabel value="0,2€"/>
+				<p:inputText value="#{posBean.count.c02}"/>
+				<p:outputLabel value="0,1€"/>
+				<p:inputText value="#{posBean.count.c01}"/>
+				<p:outputLabel value="0,05€"/>
+				<p:inputText value="#{posBean.count.c005}"/>
+				<p:outputLabel value="0,02€"/>
+				<p:inputText value="#{posBean.count.c002}"/>
+				<p:outputLabel value="0,01€"/>
+				<p:inputText value="#{posBean.count.c001}"/>
+				<p:outputLabel value="Gezählt"/>
+				<p:outputLabel value="#{posBean.count.sum}"/>
+				<p:outputLabel value="Differenz"/>
+				<p:outputLabel value="#{posBean.cashCheckDifference}"/>
+			</p:panelGrid>
+			<p:commandButton value="OK" actionListener="#{posBean.calculateCashCheckDifference}"
+			update="frmDlgClosingCashAccounts"/>
+			<p:commandButton value="Abbrechen" actionListener="#{posBean.resetCounts()}" 
+			oncomplete="PF('dlgClosingCashAccounts').hide();"/>
+		</h:form>
+	</p:dialog>
+</html>
